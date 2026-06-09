@@ -42,8 +42,8 @@ export default function Home() {
             <Image
               src={logoEev}
               alt="English Everywhere Logo"
-              width={160}
-              height={50}
+              width={110}
+              height={34}
               priority
               className="object-contain"
             />
