@@ -1,0 +1,10 @@
+{
+  "name": "english-everywhere-workspace",
+  "version": "1.0.0",
+  "description": "Root workspace for English Everywhere Next.js + Laravel stack",
+  "scripts": {
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "php backend/artisan serve",
+    "dev": "npm run dev --prefix frontend"
+  }
+}
