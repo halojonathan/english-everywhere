@@ -204,24 +204,24 @@ export default function Home() {
         {/* On Mobile Screens: Grid stack at the bottom */}
         <div className="w-full mt-12 lg:mt-0 flex flex-col sm:flex-row items-center justify-center lg:block select-none pointer-events-none">
           {/* Left Kid (Raising Hand) */}
-          <div className="w-[280px] h-[220px] sm:w-[350px] sm:h-[270px] md:w-[400px] md:h-[310px] lg:w-[450px] lg:h-[350px] lg:absolute lg:bottom-0 lg:left-0 z-10 relative">
+          <div className="w-[280px] h-[220px] sm:w-[360px] sm:h-[280px] md:w-[420px] md:h-[330px] lg:w-[500px] lg:h-[390px] xl:w-[560px] xl:h-[440px] lg:absolute lg:bottom-0 lg:left-0 z-10 relative">
             <Image
               src={leftKid}
               alt="Left Kid Sitting at Desk"
               fill
-              sizes="(max-width: 768px) 280px, (max-width: 1024px) 350px, 450px"
+              sizes="(max-width: 768px) 280px, (max-width: 1024px) 360px, (max-width: 1280px) 500px, 560px"
               className="object-contain object-bottom"
               priority
             />
           </div>
 
           {/* Right Kid (Writing/Studying) */}
-          <div className="w-[280px] h-[220px] sm:w-[350px] sm:h-[270px] md:w-[400px] md:h-[310px] lg:w-[450px] lg:h-[350px] lg:absolute lg:bottom-0 lg:right-0 z-10 relative mt-6 sm:mt-0">
+          <div className="w-[280px] h-[220px] sm:w-[360px] sm:h-[280px] md:w-[420px] md:h-[330px] lg:w-[500px] lg:h-[390px] xl:w-[560px] xl:h-[440px] lg:absolute lg:bottom-0 lg:right-0 z-10 relative mt-6 sm:mt-0">
             <Image
               src={rightKid}
               alt="Right Kid Sitting at Desk"
               fill
-              sizes="(max-width: 768px) 280px, (max-width: 1024px) 350px, 450px"
+              sizes="(max-width: 768px) 280px, (max-width: 1024px) 360px, (max-width: 1280px) 500px, 560px"
               className="object-contain object-bottom"
               priority
             />
