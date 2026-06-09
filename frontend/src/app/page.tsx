@@ -179,7 +179,7 @@ export default function Home() {
 
         {/* Center Container: Text Content */}
         <div className="text-center max-w-2xl mx-auto space-y-6 md:space-y-8 z-20 px-4 mt-6 md:mt-0">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[76px] font-black tracking-tight leading-[1.1] text-[#111111]">
+          <h1 className="font-satoshi text-4xl sm:text-5xl md:text-6xl lg:text-[76px] font-black tracking-tight leading-[1.1] text-[#111111]">
             EMBRACE YOUR
             <br />
             FUTURE WITH US
