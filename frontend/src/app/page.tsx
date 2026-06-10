@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 
 // Import local images
@@ -12,9 +12,109 @@ import leftKid from "@/app/images/left-kid.png";
 import rightKid from "@/app/images/right-kid.png";
 import hexaImg from "@/app/images/hexa-1.png";
 import starImg from "@/app/images/star-1.png";
+import star2Img from "@/app/images/star-2.png";
+import twirl2Img from "@/app/images/twirl-2.png";
+
+// Program card images
+import funnyPhonicsImg from "@/app/images/funny-phonics.png";
+import hiKidsImg from "@/app/images/hi-kids.png";
+import oxfordPhonicsImg from "@/app/images/oxford-phonics.png";
+import abracadabraImg from "@/app/images/abracadabra.png";
+import getSmartImg from "@/app/images/get-smart.png";
+import fullBlastImg from "@/app/images/full-blast.png";
+import intensiveSpeakingImg from "@/app/images/intensive-speaking.png";
+import academicWritingImg from "@/app/images/academic-writing.png";
+import toeflPrepImg from "@/app/images/toefl-prep.png";
+import privateClassImg from "@/app/images/private-class.png";
+import holidayCampImg from "@/app/images/holiday-camp.png";
+
+interface Program {
+  title: string;
+  info: string;
+  desc: string;
+  image: StaticImageData;
+  badge?: string;
+}
+
+const programsData: Record<"regular" | "intensive" | "others", Program[]> = {
+  regular: [
+    {
+      title: "Funny Phonics",
+      info: "40xLevel | 2.300.000",
+      desc: "Belajar membaca & mengeja seru dengan metode Phonics.",
+      image: funnyPhonicsImg,
+    },
+    {
+      title: "Hi Kids!",
+      info: "40xLevel | 2.300.000",
+      desc: "Kelas dasar untuk anak. Fokus pada Bahasa Inggris sehari-hari.",
+      image: hiKidsImg,
+    },
+    {
+      title: "Oxford Phonics",
+      info: "40xLevel | 2.300.000",
+      desc: "Metode Phonics dari Oxford untuk membaca & menulis handal.",
+      image: oxfordPhonicsImg,
+    },
+    {
+      title: "Abracadabra",
+      info: "40xLevel | 2.300.000",
+      desc: "Program seru untuk kosakata dasar & percakapan anak.",
+      image: abracadabraImg,
+    },
+    {
+      title: "Get Smart",
+      info: "40xLevel | 2.300.000",
+      desc: "Kurikulum dinamis, tingkatkan 4 kemampuan dasar bahasa.",
+      image: getSmartImg,
+      badge: "9-15 Tahun",
+    },
+    {
+      title: "Full Blast",
+      info: "60xLevel | 3.600.000",
+      desc: "Program lengkap untuk siswa. Kuasai English level menengah.",
+      image: fullBlastImg,
+    },
+  ],
+  intensive: [
+    {
+      title: "Intensive Speaking",
+      info: "20xLevel | 1.800.000",
+      desc: "Fokus penuh pada kelancaran berbicara dan pengucapan (pronunciation).",
+      image: intensiveSpeakingImg,
+    },
+    {
+      title: "Academic Writing",
+      info: "20xLevel | 2.000.000",
+      desc: "Kuasai penulisan esai, laporan, dan tata bahasa akademis secara intensif.",
+      image: academicWritingImg,
+    },
+    {
+      title: "TOEFL/IELTS Prep",
+      info: "30xLevel | 3.200.000",
+      desc: "Kelas persiapan intensif untuk meraih skor maksimal dalam ujian IELTS/TOEFL.",
+      image: toeflPrepImg,
+    },
+  ],
+  others: [
+    {
+      title: "Private Class",
+      info: "Custom Level | Bespoke",
+      desc: "Kelas privat 1-on-1 dengan jadwal dan kurikulum yang disesuaikan kebutuhan.",
+      image: privateClassImg,
+    },
+    {
+      title: "Holiday Camp",
+      info: "10xLevel | 1.200.000",
+      desc: "Program belajar sambil bermain yang seru selama liburan sekolah.",
+      image: holidayCampImg,
+    },
+  ],
+};
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"regular" | "intensive" | "others">("regular");
 
   return (
     <div className="min-h-screen bg-white text-slate-800 font-sans overflow-x-hidden relative flex flex-col justify-between">
@@ -275,6 +375,117 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Our Programs Section */}
+      <section id="classes" className="w-full bg-[#F7941D] relative overflow-hidden py-20 md:py-28 px-6 flex flex-col justify-center items-center">
+        {/* Floating Stars Illustration (Top Left) */}
+        <div className="absolute top-10 left-6 sm:top-14 sm:left-12 md:top-20 md:left-20 lg:top-24 lg:left-32 w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 pointer-events-none select-none z-10 animate-float-sun">
+          <Image
+            src={star2Img}
+            alt="Stars Illustration"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
+
+        {/* Floating Spiral/Twirl Illustration (Bottom Right) */}
+        <div className="absolute -bottom-8 -right-8 w-24 h-24 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-56 lg:h-56 pointer-events-none select-none z-10 transition-transform duration-500 hover:scale-105">
+          <Image
+            src={twirl2Img}
+            alt="Twirl Illustration"
+            fill
+            className="object-contain object-right-bottom"
+            priority
+          />
+        </div>
+
+        {/* Content Wrapper */}
+        <div className="max-w-7xl mx-auto w-full relative z-20">
+          {/* Header Row */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12 sm:mb-16">
+            <h2 className="font-satoshi text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
+              OUR PROGRAMS
+            </h2>
+
+            {/* Capsule Tabs */}
+            <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+              <button
+                onClick={() => setActiveTab("regular")}
+                className={`font-satoshi text-xs sm:text-sm font-bold tracking-wider px-6 py-2.5 rounded-full border border-white transition-all duration-300 cursor-pointer shadow-md ${
+                  activeTab === "regular"
+                    ? "bg-white text-[#F7941D]"
+                    : "bg-transparent text-white border-white/80 hover:border-white hover:bg-white/10"
+                }`}
+              >
+                REGULAR
+              </button>
+              <button
+                onClick={() => setActiveTab("intensive")}
+                className={`font-satoshi text-xs sm:text-sm font-bold tracking-wider px-6 py-2.5 rounded-full border border-white transition-all duration-300 cursor-pointer shadow-md ${
+                  activeTab === "intensive"
+                    ? "bg-white text-[#F7941D]"
+                    : "bg-transparent text-white border-white/80 hover:border-white hover:bg-white/10"
+                }`}
+              >
+                INTENSIVE
+              </button>
+              <button
+                onClick={() => setActiveTab("others")}
+                className={`font-satoshi text-xs sm:text-sm font-bold tracking-wider px-6 py-2.5 rounded-full border border-white transition-all duration-300 cursor-pointer shadow-md ${
+                  activeTab === "others"
+                    ? "bg-white text-[#F7941D]"
+                    : "bg-transparent text-white border-white/80 hover:border-white hover:bg-white/10"
+                }`}
+              >
+                OTHERS
+              </button>
+            </div>
+          </div>
+
+          {/* Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+            {programsData[activeTab].map((program, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-[24px] overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full group"
+              >
+                {/* Program Card Image */}
+                <div className="relative w-full h-[200px] sm:h-[220px] overflow-hidden bg-slate-50">
+                  <Image
+                    src={program.image}
+                    alt={program.title}
+                    fill
+                    className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                  
+                  {/* Optional Program Badge (e.g. Get Smart "9-15 Tahun") */}
+                  {program.badge && (
+                    <div className="absolute top-4 right-4 bg-[#0052FF] text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-md z-10">
+                      {program.badge}
+                    </div>
+                  )}
+                </div>
+
+                {/* Card Text Content */}
+                <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-satoshi text-xl sm:text-2xl font-bold text-[#111111] leading-snug">
+                      {program.title}
+                    </h3>
+                    <p className="font-poppins text-xs font-semibold text-slate-400 mt-2 mb-4 tracking-wide uppercase">
+                      {program.info}
+                    </p>
+                    <p className="font-poppins text-sm text-slate-600 leading-relaxed font-normal">
+                      {program.desc}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Minimal Footer */}
       <footer className="py-6 text-center text-xs text-slate-400 border-t border-slate-50 relative z-10">
