@@ -10,6 +10,8 @@ import sunImg from "@/app/images/sun.png";
 import twirlImg from "@/app/images/twirl.png";
 import leftKid from "@/app/images/left-kid.png";
 import rightKid from "@/app/images/right-kid.png";
+import hexaImg from "@/app/images/hexa-1.png";
+import starImg from "@/app/images/star-1.png";
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -228,6 +230,51 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* About Us Section */}
+      <section id="about" className="relative py-20 md:py-28 lg:py-36 px-6 max-w-7xl mx-auto w-full overflow-hidden bg-white">
+        {/* Hexagons Illustration (Top Right) */}
+        <div className="absolute -top-8 -right-8 w-32 h-24 sm:w-48 sm:h-36 md:w-60 md:h-44 lg:w-72 lg:h-52 pointer-events-none select-none z-10 transition-transform duration-500 hover:scale-105">
+          <Image
+            src={hexaImg}
+            alt="Hexagon Illustration"
+            fill
+            className="object-contain object-right-top"
+            priority
+          />
+        </div>
+
+        {/* Star Illustration (Bottom Left) */}
+        <div className="absolute bottom-6 left-6 w-14 h-14 md:w-20 md:h-20 pointer-events-none select-none z-10 animate-float-sun">
+          <Image
+            src={starImg}
+            alt="Star Illustration"
+            fill
+            className="object-contain object-left-bottom"
+            priority
+          />
+        </div>
+
+        {/* Text Content */}
+        <div className="max-w-4xl relative z-20 space-y-6 md:space-y-8 pl-0 md:pl-8 pr-4 sm:pr-8 md:pr-12">
+          <div className="space-y-3 md:space-y-4">
+            <h2 className="font-satoshi text-base sm:text-lg md:text-xl font-bold tracking-wider text-[#FF9E1B] uppercase">
+              ABOUT US
+            </h2>
+            <h3 className="font-satoshi text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-black tracking-tight text-[#111111] leading-[1.15]">
+              LET’S SPEAK ENGLISH EVERYWHERE!
+            </h3>
+            <p className="text-[#111111] text-base md:text-lg lg:text-[20px] font-medium leading-relaxed">
+              Karena dunia dimulai dari keberanian untuk berbicara
+            </p>
+          </div>
+
+          <p className="text-slate-600 text-sm sm:text-base md:text-md lg:text-[17px] leading-[1.8] font-poppins text-justify sm:text-left font-normal">
+            Di English Everywhere, Kami meyakini bahwa penguasaan bahasa Inggris membuka akses menuju dunia yang lebih luas. Melalui teknologi terkini dan metode pembelajaran yang komunikatif, Kami menciptakan pengalaman belajar yang hidup, relevan, dan membangkitkan antusiasme. Setiap peserta dibimbing untuk berani mengekspresikan diri, baik dalam percakapan santai maupun konteks profesional. Lebih dari sekadar mengajarkan bahasa, Kami menanamkan kepercayaan diri, menumbuhkan potensi, dan menyiapkan generasi yang siap bersaing secara global.
+          </p>
+        </div>
+      </section>
+
 
       {/* Minimal Footer */}
       <footer className="py-6 text-center text-xs text-slate-400 border-t border-slate-50 relative z-10">
