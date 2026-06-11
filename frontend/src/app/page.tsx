@@ -14,6 +14,8 @@ import hexaImg from "@/app/images/hexa-1.png";
 import starImg from "@/app/images/star-1.png";
 import star2Img from "@/app/images/star-2.png";
 import twirl2Img from "@/app/images/twirl-2.png";
+import leoImg from "@/app/images/leo.png";
+import kinImg from "@/app/images/kin.png";
 
 // Program card images
 import funnyPhonicsImg from "@/app/images/funny-phonics.png";
@@ -112,9 +114,77 @@ const programsData: Record<"regular" | "intensive" | "others", Program[]> = {
   ],
 };
 
+interface FAQItem {
+  id: string;
+  question: string;
+  answer: string;
+}
+
+const faqDataLeft: FAQItem[] = [
+  {
+    id: "faq-l1",
+    question: "Apa saja program khusus yang ditawarkan di English Everywhere?",
+    answer: "English Everywhere menawarkan berbagai program mulai dari Funny Phonics, Hi Kids!, Oxford Phonics, hingga kelas intensif TOEFL/IELTS Prep dan kelas privat 1-on-1 yang disesuaikan dengan kebutuhan belajar Anda.",
+  },
+  {
+    id: "faq-l2",
+    question: "Bagaimana cara mendaftar kursus di English Everywhere?",
+    answer: "Anda dapat mendaftar dengan mudah dengan mengklik tombol pendaftaran, mengisi formulir online, atau menghubungi tim admin kami via WhatsApp untuk mendapatkan bantuan panduan pendaftaran langsung.",
+  },
+  {
+    id: "faq-l3",
+    question: "Apakah saya akan mendapatkan sertifikat setelah menyelesaikan kursus?",
+    answer: "Ya! Setiap siswa yang berhasil menyelesaikan seluruh level program dan lulus ujian akhir akan menerima sertifikat resmi kelulusan dari English Everywhere.",
+  },
+  {
+    id: "faq-l4",
+    question: "Apa yang membedakan English Everywhere dari kursus bahasa Inggris lainnya?",
+    answer: "Kami fokus pada metode komunikatif yang interaktif dan menyenangkan untuk melatih keberanian berbicara. Kurikulum kami didesain modern dengan dukungan teknologi terkini dan tutor profesional yang suportif.",
+  },
+  {
+    id: "faq-l5",
+    question: "Berapa jumlah siswa dalam satu kelas?",
+    answer: "Untuk menjaga keefektifan belajar dan interaksi interaktif, setiap kelas reguler kami batasi maksimal hanya 6-8 siswa saja.",
+  },
+  {
+    id: "faq-l6",
+    question: "Siapa yang bisa saya hubungi jika saya memiliki pertanyaan lebih lanjut?",
+    answer: "Anda dapat menghubungi layanan Customer Service kami langsung melalui tombol WhatsApp mengambang di pojok kanan bawah halaman ini atau mengirim email ke support@englisheverywhere.com.",
+  },
+];
+
+const faqDataRight: FAQItem[] = [
+  {
+    id: "faq-r1",
+    question: "Bagaimana saya tahu level bahasa Inggris saya yang tepat untuk memulai?",
+    answer: "Kami menyediakan layanan Placement Test gratis sebelum Anda memulai kelas untuk menentukan tingkat kemampuan bahasa Inggris Anda dengan tepat.",
+  },
+  {
+    id: "faq-r2",
+    question: "Apakah kelas diadakan secara online atau tatap muka (offline)?",
+    answer: "Kami menyediakan fleksibilitas penuh dengan menawarkan kedua opsi kelas: kelas tatap muka (offline) interaktif di cabang kami, serta kelas online yang dinamis dan bisa diakses dari mana saja.",
+  },
+  {
+    id: "faq-r3",
+    question: "Siapa saja yang bisa mengikuti kursus ini? Apakah ada batasan usia?",
+    answer: "Program kami dirancang secara komprehensif mulai dari anak-anak (usia 4-12 tahun), remaja (usia 13-18 tahun), hingga kelas persiapan ujian untuk usia dewasa.",
+  },
+  {
+    id: "faq-r4",
+    question: "Apakah ada kelas percobaan (trial class) gratis sebelum mendaftar?",
+    answer: "Tentu saja! Anda bisa mendaftar program Trial Class gratis untuk merasakan langsung keseruan metode pembelajaran kami sebelum memutuskan untuk bergabung.",
+  },
+  {
+    id: "faq-r5",
+    question: "Media pembelajaran apa saja yang akan saya dapatkan?",
+    answer: "Anda akan mendapatkan akses ke modul pembelajaran digital (e-book), buku latihan fisik, materi video interaktif, serta akses ke platform belajar online kami yang bisa diakses kapan saja.",
+  },
+];
+
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"regular" | "intensive" | "others">("regular");
+  const [openFaq, setOpenFaq] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-white text-slate-800 font-sans overflow-x-hidden relative flex flex-col justify-between">
@@ -487,8 +557,124 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section id="faq" className="w-full bg-white relative overflow-hidden py-20 md:py-28 px-6 flex flex-col justify-center items-center">
+        {/* Koala Illustration (Top Right) */}
+        <div className="absolute top-8 right-0 sm:right-4 md:right-8 lg:right-12 w-[110px] h-[110px] sm:w-[150px] sm:h-[150px] md:w-[180px] md:h-[180px] pointer-events-none select-none z-10">
+          <Image
+            src={kinImg}
+            alt="Koala Illustration"
+            fill
+            className="object-contain object-right-top"
+            priority
+          />
+        </div>
+
+        {/* Lion Illustration (Bottom Left) */}
+        <div className="absolute bottom-0 left-0 w-[140px] h-[140px] sm:w-[200px] sm:h-[200px] md:w-[260px] md:h-[260px] pointer-events-none select-none z-10">
+          <Image
+            src={leoImg}
+            alt="Lion Illustration"
+            fill
+            className="object-contain object-left-bottom"
+            priority
+          />
+        </div>
+
+        {/* Content Wrapper */}
+        <div className="max-w-6xl mx-auto w-full relative z-20">
+          {/* Centered Heading */}
+          <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+            <h2 className="font-satoshi text-2xl sm:text-3xl md:text-[38px] font-black tracking-tight text-[#1E293B] leading-tight uppercase">
+              MASIH RAGU? YUK, CARI TAHU DI SINI
+            </h2>
+          </div>
+
+          {/* Accordion Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
+            {/* Left Column */}
+            <div className="space-y-4">
+              {faqDataLeft.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => setOpenFaq(openFaq === item.id ? null : item.id)}
+                  className={`bg-white border rounded-[16px] p-5 cursor-pointer transition-all duration-300 select-none shadow-sm hover:shadow-md hover:border-slate-300 ${
+                    openFaq === item.id ? "border-[#FF9E1B]" : "border-slate-200/70"
+                  }`}
+                >
+                  <div className="flex justify-between items-center gap-4">
+                    <h4 className="font-satoshi text-[#0F172A] font-bold text-sm sm:text-base leading-snug">
+                      {item.question}
+                    </h4>
+                    <span
+                      className={`text-[#FF9E1B] font-bold text-xl sm:text-2xl transition-transform duration-300 ${
+                        openFaq === item.id ? "rotate-45" : ""
+                      }`}
+                    >
+                      +
+                    </span>
+                  </div>
+                  <div
+                    className={`grid transition-all duration-300 ease-in-out ${
+                      openFaq === item.id
+                        ? "grid-rows-[1fr] opacity-100 mt-4"
+                        : "grid-rows-[0fr] opacity-0 mt-0"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <p className="font-poppins text-slate-500 text-xs sm:text-sm leading-relaxed pt-1">
+                        {item.answer}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Right Column */}
+            <div className="space-y-4">
+              {faqDataRight.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => setOpenFaq(openFaq === item.id ? null : item.id)}
+                  className={`bg-white border rounded-[16px] p-5 cursor-pointer transition-all duration-300 select-none shadow-sm hover:shadow-md hover:border-slate-300 ${
+                    openFaq === item.id ? "border-[#FF9E1B]" : "border-slate-200/70"
+                  }`}
+                >
+                  <div className="flex justify-between items-center gap-4">
+                    <h4 className="font-satoshi text-[#0F172A] font-bold text-sm sm:text-base leading-snug">
+                      {item.question}
+                    </h4>
+                    <span
+                      className={`text-[#FF9E1B] font-bold text-xl sm:text-2xl transition-transform duration-300 ${
+                        openFaq === item.id ? "rotate-45" : ""
+                      }`}
+                    >
+                      +
+                    </span>
+                  </div>
+                  <div
+                    className={`grid transition-all duration-300 ease-in-out ${
+                      openFaq === item.id
+                        ? "grid-rows-[1fr] opacity-100 mt-4"
+                        : "grid-rows-[0fr] opacity-0 mt-0"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <p className="font-poppins text-slate-500 text-xs sm:text-sm leading-relaxed pt-1">
+                        {item.answer}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Minimal Footer */}
-      <footer className="py-6 text-center text-xs text-slate-400 border-t border-slate-50 relative z-10">
+      <footer className="py-6 text-center text-xs text-slate-400 border-t border-slate-50 relative z-10 bg-white">
         <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p>© 2026 English Everywhere. All rights reserved.</p>
           <div className="flex gap-4">
@@ -498,6 +684,29 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Floating WhatsApp Widget */}
+      <a
+        href="https://wa.me/6281234567890"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#20ba5a] text-white p-4 rounded-full shadow-lg hover:shadow-xl hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center group cursor-pointer"
+        aria-label="Contact us on WhatsApp"
+      >
+        <svg
+          className="w-6 h-6 sm:w-7 sm:h-7"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M17.472 14.382c-.022-.079-.116-.16-.196-.214-1.229-.838-2.145-1.127-2.615-.815-.47.311-.884.774-1.233.725-.333-.047-.723-.231-1.309-.487-1.428-.621-2.457-1.687-2.92-2.316-.328-.445-.246-.669-.039-.938.207-.269.832-1.04 1.115-1.385.285-.345.244-.577.062-.843-.18-.266-.867-2.127-1.192-2.735-.316-.591-.703-.521-.994-.521-.215 0-.462-.02-.705-.02-.744 0-1.295.274-1.666.678-.506.551-1.744 1.702-1.744 4.153s1.782 4.821 2.029 5.15c.247.33 3.51 5.358 8.497 7.51 1.186.512 2.112.818 2.834 1.047 1.196.38 2.284.327 3.145.198.96-.144 2.955-1.208 3.367-2.378.412-1.17.412-2.171.29-2.379zM12.012 2.07c-5.477 0-9.934 4.457-9.934 9.934 0 2.006.593 3.875 1.625 5.434l-1.727 6.302 6.45-1.69a9.882 9.882 0 0 0 5.176 1.458c5.477 0 9.934-4.457 9.934-9.934 0-5.477-4.457-9.934-9.934-9.934zm0 17.986c-1.92 0-3.7-.514-5.234-1.404l-.375-.223-3.889 1.02 1.037-3.785-.244-.389A8.04 8.04 0 0 1 3.992 12c0-4.462 3.63-8.093 8.093-8.093s8.093 3.63 8.093 8.093-3.63 8.093-8.093 8.093z" />
+        </svg>
+        
+        {/* Floating tooltip */}
+        <span className="absolute right-16 bg-[#0F172A] text-white text-xs font-semibold px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300 whitespace-nowrap shadow-md">
+          Chat via WhatsApp
+        </span>
+      </a>
     </div>
   );
 }
