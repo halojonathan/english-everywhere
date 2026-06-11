@@ -16,6 +16,7 @@ import star2Img from "@/app/images/star-2.png";
 import twirl2Img from "@/app/images/twirl-2.png";
 import leoImg from "@/app/images/leo.png";
 import kinImg from "@/app/images/kin.png";
+import diraImg from "@/app/images/dira.png";
 
 // Program card images
 import funnyPhonicsImg from "@/app/images/funny-phonics.png";
@@ -181,10 +182,39 @@ const faqDataRight: FAQItem[] = [
   },
 ];
 
+interface TestimonialItem {
+  heading: string;
+  body: string;
+  stars: number;
+  author: string;
+}
+
+const testimonialsData: TestimonialItem[] = [
+  {
+    heading: "Percaya Diri Bahasa Inggris Yang Tumbuh Pesat.",
+    body: "Dulu anak saya malu-malu kalau disuruh bicara bahasa Inggris, takut salah. Setelah ikut English Everywhere, dia jadi berani banget! Sekarang dia sering tiba-tiba menyanyi lagu bahasa Inggris. Metode belajarnya seru, jadi dia tidak merasa tertekan.",
+    stars: 5,
+    author: "Ibu Dita",
+  },
+  {
+    heading: "Belajar Bahasa Inggris Jadi Sangat Menyenangkan!",
+    body: "Anak saya selalu bersemangat setiap kali jadwal kelas tiba. Tutornya ramah dan sabar, serta pembawaan belajarnya sangat seru melalui game dan aktivitas interaktif. Kemampuan speaking-nya meningkat pesat!",
+    stars: 5,
+    author: "Bapak Budi",
+  },
+  {
+    heading: "Persiapan Ujian Terbaik dan Terpercaya.",
+    body: "Saya mengambil program TOEFL prep di English Everywhere. Materinya terstruktur, tips-tips ujiannya sangat praktis, dan tutornya sangat kompeten. Skor TOEFL saya naik lebih dari 100 poin!",
+    stars: 5,
+    author: "Kak Sarah",
+  },
+];
+
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"regular" | "intensive" | "others">("regular");
   const [openFaq, setOpenFaq] = useState<string | null>(null);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   return (
     <div className="min-h-screen bg-white text-slate-800 font-sans overflow-x-hidden relative flex flex-col justify-between">
@@ -679,6 +709,198 @@ export default function Home() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="w-full bg-white py-16 md:py-20 px-6 flex flex-col items-center justify-center relative overflow-hidden">
+        {/* Testimonials Slider Wrapper */}
+        <div className="max-w-4xl mx-auto w-full relative z-20 flex items-center justify-between gap-4 sm:gap-8">
+          
+          {/* Left Navigation Arrow */}
+          <button
+            onClick={() =>
+              setActiveTestimonial((prev) =>
+                prev === 0 ? testimonialsData.length - 1 : prev - 1
+              )
+            }
+            className="flex-shrink-0 w-12 h-12 rounded-full border border-slate-200 bg-white shadow-sm hover:shadow-md hover:border-slate-300 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer text-slate-400 hover:text-slate-700 hidden sm:flex"
+            aria-label="Previous testimonial"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Testimonial Card */}
+          <div className="bg-white border border-slate-200/80 rounded-[24px] p-8 sm:p-12 flex-1 shadow-sm transition-all duration-500 min-h-[300px] flex flex-col justify-between relative">
+            
+            {/* Slide Content */}
+            <div className="space-y-4">
+              <h3 className="font-satoshi text-xl sm:text-2xl font-black text-[#FF9E1B] leading-snug">
+                {testimonialsData[activeTestimonial].heading}
+              </h3>
+              <p className="font-poppins text-slate-600 text-sm sm:text-base leading-relaxed font-normal">
+                "{testimonialsData[activeTestimonial].body}"
+              </p>
+            </div>
+
+            {/* Separator and Author Info */}
+            <div className="mt-8">
+              <div className="border-t border-slate-100 my-4"></div>
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                {/* 5 Stars */}
+                <div className="flex items-center gap-1">
+                  {[...Array(testimonialsData[activeTestimonial].stars)].map((_, i) => (
+                    <svg
+                      key={i}
+                      className="w-5 h-5 text-[#FFC107] fill-current"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                {/* Author Name */}
+                <span className="font-satoshi text-sm sm:text-base font-bold text-[#1E293B]">
+                  {testimonialsData[activeTestimonial].author}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Navigation Arrow */}
+          <button
+            onClick={() =>
+              setActiveTestimonial((prev) =>
+                prev === testimonialsData.length - 1 ? 0 : prev + 1
+              )
+            }
+            className="flex-shrink-0 w-12 h-12 rounded-full border border-slate-200 bg-white shadow-sm hover:shadow-md hover:border-slate-300 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer text-slate-400 hover:text-slate-700 hidden sm:flex"
+            aria-label="Next testimonial"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Mobile Slide Controls & Dots */}
+        <div className="flex sm:hidden justify-center items-center gap-6 mt-8 relative z-20">
+          <button
+            onClick={() =>
+              setActiveTestimonial((prev) =>
+                prev === 0 ? testimonialsData.length - 1 : prev - 1
+              )
+            }
+            className="w-10 h-10 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center text-slate-400"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          
+          <div className="flex items-center gap-2">
+            {testimonialsData.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveTestimonial(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  activeTestimonial === index ? "bg-[#FF9E1B] w-4" : "bg-slate-200"
+                }`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={() =>
+              setActiveTestimonial((prev) =>
+                prev === testimonialsData.length - 1 ? 0 : prev + 1
+              )
+            }
+            className="w-10 h-10 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center text-slate-400"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Desktop Dots Indicator */}
+        <div className="hidden sm:flex justify-center items-center gap-2 mt-6 relative z-20">
+          {testimonialsData.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveTestimonial(index)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                activeTestimonial === index ? "bg-[#FF9E1B] w-4" : "bg-slate-200"
+              }`}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* CTA Banner Section */}
+      <section id="cta" className="w-full bg-white pb-24 px-6 flex justify-center items-center relative overflow-hidden">
+        <div className="relative w-full max-w-5xl mx-auto">
+          {/* Faint Hexagonal Border Details */}
+          <div className="bg-[#F7941D] rounded-[24px] overflow-hidden py-12 md:py-16 px-8 md:px-16 flex flex-col md:flex-row items-center justify-between gap-6 md:pl-48 lg:pl-56 shadow-lg min-h-[180px] relative">
+            
+            {/* Hexagonal graphical overlay (decorating the right side) */}
+            <div className="absolute -right-10 -bottom-10 w-44 h-44 md:w-56 md:h-56 opacity-10 pointer-events-none select-none z-10">
+              <svg className="w-full h-full text-white fill-none stroke-current" strokeWidth="2" viewBox="0 0 100 100">
+                <polygon points="50,1 95,25 95,75 50,99 5,75 5,25" />
+              </svg>
+            </div>
+            <div className="absolute right-12 -top-6 w-32 h-32 opacity-10 pointer-events-none select-none z-10">
+              <svg className="w-full h-full text-white fill-none stroke-current" strokeWidth="2" viewBox="0 0 100 100">
+                <polygon points="50,1 95,25 95,75 50,99 5,75 5,25" />
+              </svg>
+            </div>
+
+            {/* CTA Copywriter */}
+            <div className="text-white text-center md:text-left space-y-2 relative z-20">
+              <h3 className="font-satoshi text-2xl sm:text-3xl lg:text-[32px] font-black leading-tight">
+                Daftar dan raih kesempatan karier
+                <br /> yang lebih baik!
+              </h3>
+            </div>
+
+            {/* CTA Button */}
+            <div className="relative z-20 flex-shrink-0">
+              <Link
+                href="#classes"
+                className="bg-white hover:bg-slate-50 text-[#F7941D] font-bold text-base px-8 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all duration-300 inline-block transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+              >
+                Browse Class
+              </Link>
+            </div>
+          </div>
+
+          {/* Waving Girl Illustration (Dira) */}
+          {/* Placed relative to the container and positioned absolute bottom-0 overflowing the orange box */}
+          <div className="absolute bottom-0 left-6 sm:left-12 md:left-8 lg:left-12 w-[130px] h-[180px] sm:w-[150px] sm:h-[200px] md:w-[190px] md:h-[250px] lg:w-[220px] lg:h-[290px] z-20 pointer-events-none select-none transform translate-y-[3%]">
+            <Image
+              src={diraImg}
+              alt="Dira Waving Illustration"
+              fill
+              className="object-contain object-bottom"
+              priority
+            />
           </div>
         </div>
       </section>
