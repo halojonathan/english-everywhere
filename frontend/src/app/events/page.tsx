@@ -161,7 +161,7 @@ export default function EventsPage() {
             <Link href="/events" className="text-sm font-bold text-slate-900 border-b-2 border-indigo-600 pb-1 pt-0.5 px-0.5">
               Events
             </Link>
-            <Link href="/#corner" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
+            <Link href="/english-corner" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
               English Corner
             </Link>
           </nav>
@@ -230,7 +230,7 @@ export default function EventsPage() {
               Events
             </Link>
             <Link
-              href="/#corner"
+              href="/english-corner"
               onClick={() => setMobileMenuOpen(false)}
               className="block py-2 text-base font-medium text-slate-600 hover:text-slate-900"
             >
@@ -667,7 +667,7 @@ export default function EventsPage() {
                 </Link>
               </li>
               <li>
-                <Link href="/#corner" className="hover:text-[#4AC9CD] transition-colors">
+                <Link href="/english-corner" className="hover:text-[#4AC9CD] transition-colors">
                   English Corner
                 </Link>
               </li>
