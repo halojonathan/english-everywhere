@@ -905,11 +905,128 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Minimal Footer */}
-      <footer className="py-6 text-center text-xs text-slate-400 border-t border-slate-50 relative z-10 bg-white">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-3">
-          <p>© 2026 English Everywhere. All rights reserved.</p>
-          <div className="flex gap-4">
+      {/* Footer */}
+      <footer className="w-full bg-white relative z-10 pt-16 pb-8 border-t border-slate-100">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10 lg:gap-16">
+          
+          {/* Column 1: Brand Info */}
+          <div className="md:col-span-2 space-y-4">
+            <h4 className="font-satoshi text-2xl font-black text-[#4AC9CD]">
+              English Everywhere
+            </h4>
+            <p className="font-poppins text-slate-800 font-bold text-base">
+              Embrace Your Future With Us!
+            </p>
+            <div className="flex flex-wrap gap-x-4 gap-y-1 font-poppins text-xs text-slate-400 font-medium">
+              <span>#EnglishCourses</span>
+              <span>#KosakataInggris</span>
+              <span>#SpeakingWithConfidence</span>
+            </div>
+          </div>
+
+          {/* Column 2: Features */}
+          <div className="space-y-4">
+            <h4 className="font-satoshi text-base font-bold text-slate-800 tracking-wider uppercase">
+              Features
+            </h4>
+            <ul className="space-y-2.5 font-poppins text-sm text-slate-500 font-medium">
+              <li>
+                <Link href="/" className="hover:text-[#4AC9CD] transition-colors">
+                  Homepage
+                </Link>
+              </li>
+              <li>
+                <Link href="#about" className="hover:text-[#4AC9CD] transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="#classes" className="hover:text-[#4AC9CD] transition-colors">
+                  Daftar Kelas
+                </Link>
+              </li>
+              <li>
+                <Link href="#events" className="hover:text-[#4AC9CD] transition-colors">
+                  Events
+                </Link>
+              </li>
+              <li>
+                <Link href="#corner" className="hover:text-[#4AC9CD] transition-colors">
+                  English Corner
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Contact */}
+          <div className="space-y-4">
+            <h4 className="font-satoshi text-base font-bold text-slate-800 tracking-wider uppercase">
+              Contact
+            </h4>
+            
+            {/* Address */}
+            <div className="space-y-1 font-poppins text-sm text-slate-500">
+              <p className="font-bold text-slate-700">Address:</p>
+              <p className="leading-relaxed font-normal">
+                Cendana Residence Blok H8 No 6,
+                <br />
+                South Tangerang 15416
+              </p>
+              <p className="leading-relaxed font-normal pt-2">
+                Jl. Soka Indah no. 13 Dukuhwaluh,
+                <br />
+                Kembaran, Purwokerto 53182
+              </p>
+            </div>
+
+            {/* Phone */}
+            <div className="space-y-1 font-poppins text-sm text-slate-500 pt-2">
+              <p className="font-bold text-slate-700">Phone number:</p>
+              <p className="font-normal hover:text-[#4AC9CD] transition-colors">
+                <a href="tel:+628997626888">+628997626888</a>
+              </p>
+            </div>
+
+            {/* Social Media */}
+            <div className="space-y-2 font-poppins text-sm text-slate-500 pt-2">
+              <p className="font-bold text-slate-700">Social Media:</p>
+              <div className="flex items-center gap-3 text-slate-600">
+                {/* YouTube */}
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#4AC9CD] transition-colors" aria-label="YouTube">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
+                </a>
+                {/* Instagram */}
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#4AC9CD] transition-colors" aria-label="Instagram">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                </a>
+                {/* Email */}
+                <a href="mailto:info@englisheverywhere.com" className="hover:text-[#4AC9CD] transition-colors" aria-label="Email">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                </a>
+                {/* Phone Call */}
+                <a href="tel:+628997626888" className="hover:text-[#4AC9CD] transition-colors" aria-label="Phone Call">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Copyright divider and text */}
+        <div className="max-w-7xl mx-auto px-6 mt-12 pt-6 border-t border-slate-100/80 text-center font-poppins text-xs text-slate-400">
+          <p>© 2025 English Everywhere Ltd. All Rights Reserved.</p>
+          <div className="mt-2">
             <Link href="/status" className="hover:text-slate-600 transition-colors">
               Database Connection Status
             </Link>
