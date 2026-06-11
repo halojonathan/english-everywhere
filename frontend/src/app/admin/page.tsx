@@ -59,61 +59,16 @@ export default function AdminDashboardPage() {
     { id: "e15", title: "Summer Camp 2025 Completion Ceremony", date: "10 Aug 2025", time: "10.00", location: "Bintaro", type: "Past" },
   ]);
 
-  // ----------------------------------------------------
-  // Core Accounts Data State
-  // ----------------------------------------------------
   const [accounts, setAccounts] = useState<AccountItem[]>([]);
 
-  // Initialize accounts with mock data to total 168 (161 Students, 7 Teachers)
+  // Initialize accounts with exactly 3 dummy accounts matching the mockup
   useEffect(() => {
-    const baseStudents: AccountItem[] = [
+    const dummyAccounts: AccountItem[] = [
       { id: "s1", name: "Abhiyazka Ramazan", username: "Abhiyazka Ramazan", dob: "-", status: "Active", role: "Student" },
       { id: "s2", name: "Abqary Ismail Winatra", username: "Abqary Ismail Winatra", dob: "13/09/2016", status: "Active", role: "Student" },
       { id: "s3", name: "Adhyastha Cetta Franata", username: "Adhyastha Cetta Franata", dob: "27/12/2014", status: "Active", role: "Student" },
-      { id: "s4", name: "Adhyastha R. Kamil", username: "Adhyastha R. Kamil", dob: "18/09/2015", status: "Waiting List", role: "Student" },
-      { id: "s5", name: "Adinda Azzahra", username: "Adinda Azzahra", dob: "16/10/2013", status: "Non Active", role: "Student" },
-      { id: "s6", name: "Aditya Prihartoko", username: "Aditya", dob: "11/09/1987", status: "Active", role: "Student" },
-      { id: "s7", name: "Adnan Rafif Azis", username: "Adnan Rafif Azis", dob: "20/09/2016", status: "Active", role: "Student" },
     ];
-
-    const baseTeachers: AccountItem[] = [
-      { id: "t1", name: "English Teacher", username: "teacher", dob: "12/05/1990", status: "Active", role: "Teacher" },
-      { id: "t2", name: "Sarah Jenkins", username: "sarah.j", dob: "24/08/1988", status: "Active", role: "Teacher" },
-      { id: "t3", name: "Michael Smith", username: "michael.s", dob: "15/02/1985", status: "Active", role: "Teacher" },
-      { id: "t4", name: "David Miller", username: "david.m", dob: "10/11/1992", status: "Active", role: "Teacher" },
-      { id: "t5", name: "Emma Watson", username: "emma.w", dob: "15/04/1990", status: "Active", role: "Teacher" },
-      { id: "t6", name: "James Bond", username: "james.b", dob: "07/07/1980", status: "Active", role: "Teacher" },
-      { id: "t7", name: "John Doe", username: "john.d", dob: "01/01/1991", status: "Active", role: "Teacher" },
-    ];
-
-    const generatedStudentsCount = 161 - baseStudents.length; // 154
-    const generatedStudents: AccountItem[] = [];
-
-    // Names generator helper
-    const firstNames = ["Alvaro", "Bima", "Carla", "Daniel", "Evelyn", "Fahri", "Gaby", "Hafiz", "Indah", "Joko", "Keisha", "Lutfi", "Mila", "Naufal", "Olivia", "Putra", "Rania", "Satria", "Talitha", "Yusuf"];
-    const lastNames = ["Saputra", "Wibowo", "Kurniawan", "Sari", "Lestari", "Hidayat", "Nugroho", "Pratama", "Wijaya", "Utami", "Putri", "Rahmawati"];
-
-    for (let i = 1; i <= generatedStudentsCount; i++) {
-      const fn = firstNames[i % firstNames.length];
-      const ln = lastNames[i % lastNames.length];
-      const fullName = `${fn} ${ln} ${i}`;
-      const username = `${fn.toLowerCase()}.${ln.toLowerCase()}.${i}`;
-      
-      let status: "Active" | "Waiting List" | "Non Active" = "Active";
-      if (i % 18 === 0) status = "Non Active";
-      else if (i % 25 === 0) status = "Waiting List";
-
-      generatedStudents.push({
-        id: `gen-s-${i}`,
-        name: fullName,
-        username: username,
-        dob: `${(1 + (i % 28)).toString().padStart(2, "0")}/${(1 + (i % 12)).toString().padStart(2, "0")}/${2010 + (i % 8)}`,
-        status: status,
-        role: "Student",
-      });
-    }
-
-    setAccounts([...baseStudents, ...generatedStudents, ...baseTeachers]);
+    setAccounts(dummyAccounts);
   }, []);
 
   // Sync auth state
