@@ -124,32 +124,32 @@ const faqDataLeft: FAQItem[] = [
   {
     id: "faq-l1",
     question: "Apa saja program khusus yang ditawarkan di English Everywhere?",
-    answer: "English Everywhere menawarkan berbagai program mulai dari Funny Phonics, Hi Kids!, Oxford Phonics, hingga kelas intensif TOEFL/IELTS Prep dan kelas privat 1-on-1 yang disesuaikan dengan kebutuhan belajar Anda.",
+    answer: "Kami menawarkan berbagai program mulai dari Phonics untuk pemula, English for Kids, adults, professionals, hingga persiapan tes internasional.",
   },
   {
     id: "faq-l2",
     question: "Bagaimana cara mendaftar kursus di English Everywhere?",
-    answer: "Anda dapat mendaftar dengan mudah dengan mengklik tombol pendaftaran, mengisi formulir online, atau menghubungi tim admin kami via WhatsApp untuk mendapatkan bantuan panduan pendaftaran langsung.",
+    answer: "Anda bisa mendaftar melalui website ini dengan mengklik tombol \"Daftar Kelas\" atau menghubungi admin kami via WhatsApp.",
   },
   {
     id: "faq-l3",
     question: "Apakah saya akan mendapatkan sertifikat setelah menyelesaikan kursus?",
-    answer: "Ya! Setiap siswa yang berhasil menyelesaikan seluruh level program dan lulus ujian akhir akan menerima sertifikat resmi kelulusan dari English Everywhere.",
+    answer: "Tentu saja! Setiap siswa yang menyelesaikan level tertentu akan mendapatkan sertifikat resmi dari English Everywhere.",
   },
   {
     id: "faq-l4",
     question: "Apa yang membedakan English Everywhere dari kursus bahasa Inggris lainnya?",
-    answer: "Kami fokus pada metode komunikatif yang interaktif dan menyenangkan untuk melatih keberanian berbicara. Kurikulum kami didesain modern dengan dukungan teknologi terkini dan tutor profesional yang suportif.",
+    answer: "Kami fokus pada metode pembelajaran yang interaktif, menyenangkan, dan berpusat pada praktik berbicara (speaking).",
   },
   {
     id: "faq-l5",
     question: "Berapa jumlah siswa dalam satu kelas?",
-    answer: "Untuk menjaga keefektifan belajar dan interaksi interaktif, setiap kelas reguler kami batasi maksimal hanya 6-8 siswa saja.",
+    answer: "Untuk menjaga kualitas pembelajaran, kami membatasi jumlah siswa maksimal 8-10 orang per kelas.",
   },
   {
     id: "faq-l6",
     question: "Siapa yang bisa saya hubungi jika saya memiliki pertanyaan lebih lanjut?",
-    answer: "Anda dapat menghubungi layanan Customer Service kami langsung melalui tombol WhatsApp mengambang di pojok kanan bawah halaman ini atau mengirim email ke support@englisheverywhere.com.",
+    answer: "Anda bisa menghubungi tim customer service kami melalui WhatsApp atau email yang tertera di website.",
   },
 ];
 
@@ -157,27 +157,27 @@ const faqDataRight: FAQItem[] = [
   {
     id: "faq-r1",
     question: "Bagaimana saya tahu level bahasa Inggris saya yang tepat untuk memulai?",
-    answer: "Kami menyediakan layanan Placement Test gratis sebelum Anda memulai kelas untuk menentukan tingkat kemampuan bahasa Inggris Anda dengan tepat.",
+    answer: "Kami menyediakan placement test gratis untuk menentukan level kemampuan bahasa Inggris Anda sebelum memulai kelas.",
   },
   {
     id: "faq-r2",
     question: "Apakah kelas diadakan secara online atau tatap muka (offline)?",
-    answer: "Kami menyediakan fleksibilitas penuh dengan menawarkan kedua opsi kelas: kelas tatap muka (offline) interaktif di cabang kami, serta kelas online yang dinamis dan bisa diakses dari mana saja.",
+    answer: "Kami menyediakan kedua opsi tersebut. Anda bisa memilih kelas online via Zoom atau kelas offline di center kami, dan home visit.",
   },
   {
     id: "faq-r3",
     question: "Siapa saja yang bisa mengikuti kursus ini? Apakah ada batasan usia?",
-    answer: "Program kami dirancang secara komprehensif mulai dari anak-anak (usia 4-12 tahun), remaja (usia 13-18 tahun), hingga kelas persiapan ujian untuk usia dewasa.",
+    answer: "Kursus kami terbuka untuk semua usia, mulai dari anak-anak (usia 2,5 tahun) hingga usia dewasa.",
   },
   {
     id: "faq-r4",
     question: "Apakah ada kelas percobaan (trial class) gratis sebelum mendaftar?",
-    answer: "Tentu saja! Anda bisa mendaftar program Trial Class gratis untuk merasakan langsung keseruan metode pembelajaran kami sebelum memutuskan untuk bergabung.",
+    answer: "Ya, kami menyediakan 1x free trial class agar Anda bisa merasakan pengalaman belajar bersama kami.",
   },
   {
     id: "faq-r5",
     question: "Media pembelajaran apa saja yang akan saya dapatkan?",
-    answer: "Anda akan mendapatkan akses ke modul pembelajaran digital (e-book), buku latihan fisik, materi video interaktif, serta akses ke platform belajar online kami yang bisa diakses kapan saja.",
+    answer: "Anda akan mendapatkan modul pembelajaran, interactive whiteboard, dan materi tambahan berupa video/audio.",
   },
 ];
 
@@ -598,21 +598,23 @@ export default function Home() {
                 <div
                   key={item.id}
                   onClick={() => setOpenFaq(openFaq === item.id ? null : item.id)}
-                  className={`bg-white border rounded-[16px] p-5 cursor-pointer transition-all duration-300 select-none shadow-sm hover:shadow-md hover:border-slate-300 ${
-                    openFaq === item.id ? "border-[#FF9E1B]" : "border-slate-200/70"
-                  }`}
+                  className="bg-white border border-slate-200/70 hover:border-slate-300 rounded-[16px] p-5 cursor-pointer transition-all duration-300 select-none shadow-sm hover:shadow-md"
                 >
                   <div className="flex justify-between items-center gap-4">
                     <h4 className="font-satoshi text-[#0F172A] font-bold text-sm sm:text-base leading-snug">
                       {item.question}
                     </h4>
-                    <span
-                      className={`text-[#FF9E1B] font-bold text-xl sm:text-2xl transition-transform duration-300 ${
-                        openFaq === item.id ? "rotate-45" : ""
-                      }`}
-                    >
-                      +
-                    </span>
+                    {/* Animated Plus-Minus Toggle */}
+                    <div className="relative w-5 h-5 flex items-center justify-center flex-shrink-0">
+                      {/* Horizontal Line */}
+                      <div className="absolute w-3.5 h-[1.5px] bg-slate-500 rounded-full transition-transform duration-300"></div>
+                      {/* Vertical Line */}
+                      <div
+                        className={`absolute w-[1.5px] h-3.5 bg-slate-500 rounded-full transition-all duration-300 ${
+                          openFaq === item.id ? "rotate-90 scale-y-0 opacity-0" : ""
+                        }`}
+                      ></div>
+                    </div>
                   </div>
                   <div
                     className={`grid transition-all duration-300 ease-in-out ${
@@ -622,9 +624,12 @@ export default function Home() {
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <p className="font-poppins text-slate-500 text-xs sm:text-sm leading-relaxed pt-1">
-                        {item.answer}
-                      </p>
+                      {/* Divider line and Answer */}
+                      <div className="border-t border-slate-100 pt-4">
+                        <p className="font-poppins text-slate-500 text-xs sm:text-sm leading-relaxed">
+                          {item.answer}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -637,21 +642,23 @@ export default function Home() {
                 <div
                   key={item.id}
                   onClick={() => setOpenFaq(openFaq === item.id ? null : item.id)}
-                  className={`bg-white border rounded-[16px] p-5 cursor-pointer transition-all duration-300 select-none shadow-sm hover:shadow-md hover:border-slate-300 ${
-                    openFaq === item.id ? "border-[#FF9E1B]" : "border-slate-200/70"
-                  }`}
+                  className="bg-white border border-slate-200/70 hover:border-slate-300 rounded-[16px] p-5 cursor-pointer transition-all duration-300 select-none shadow-sm hover:shadow-md"
                 >
                   <div className="flex justify-between items-center gap-4">
                     <h4 className="font-satoshi text-[#0F172A] font-bold text-sm sm:text-base leading-snug">
                       {item.question}
                     </h4>
-                    <span
-                      className={`text-[#FF9E1B] font-bold text-xl sm:text-2xl transition-transform duration-300 ${
-                        openFaq === item.id ? "rotate-45" : ""
-                      }`}
-                    >
-                      +
-                    </span>
+                    {/* Animated Plus-Minus Toggle */}
+                    <div className="relative w-5 h-5 flex items-center justify-center flex-shrink-0">
+                      {/* Horizontal Line */}
+                      <div className="absolute w-3.5 h-[1.5px] bg-slate-500 rounded-full transition-transform duration-300"></div>
+                      {/* Vertical Line */}
+                      <div
+                        className={`absolute w-[1.5px] h-3.5 bg-slate-500 rounded-full transition-all duration-300 ${
+                          openFaq === item.id ? "rotate-90 scale-y-0 opacity-0" : ""
+                        }`}
+                      ></div>
+                    </div>
                   </div>
                   <div
                     className={`grid transition-all duration-300 ease-in-out ${
@@ -661,9 +668,12 @@ export default function Home() {
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <p className="font-poppins text-slate-500 text-xs sm:text-sm leading-relaxed pt-1">
-                        {item.answer}
-                      </p>
+                      {/* Divider line and Answer */}
+                      <div className="border-t border-slate-100 pt-4">
+                        <p className="font-poppins text-slate-500 text-xs sm:text-sm leading-relaxed">
+                          {item.answer}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
