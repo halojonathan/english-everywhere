@@ -18,29 +18,73 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!username || !password) {
-      setError("Username and Password are required.");
+      setError("Username dan Password wajib diisi.");
       return;
     }
 
     setIsSubmitting(true);
     setError(null);
 
-    // Mock verification
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.status === "success") {
+        localStorage.setItem("role", data.user.role);
+        localStorage.setItem("username", data.user.name);
+        setSuccess(true);
+        setTimeout(() => {
+          if (data.user.role === "admin") {
+            router.push("/admin");
+          } else {
+            router.push("/");
+          }
+        }, 1200);
+        return;
+      } else {
+        setError(data.message || "Username atau password salah.");
+        setIsSubmitting(false);
+        return;
+      }
+    } catch (apiError) {
+      console.warn("Backend API not reachable. Using fallback credentials validation.");
+    }
+
+    // Fallback logic
     setTimeout(() => {
       setIsSubmitting(false);
-      if (username === "admin" && password === "admin123") {
+      const fallbackUsers: Record<string, { pass: string; name: string; role: string }> = {
+        admin: { pass: "admin123", name: "System Administrator", role: "admin" },
+        teacher: { pass: "guru123", name: "English Teacher", role: "teacher" },
+        student: { pass: "murid123", name: "Active Student", role: "student" },
+      };
+
+      if (fallbackUsers[username] && fallbackUsers[username].pass === password) {
+        const user = fallbackUsers[username];
+        localStorage.setItem("role", user.role);
+        localStorage.setItem("username", user.name);
         setSuccess(true);
-        // Redirect to homepage after success
         setTimeout(() => {
-          router.push("/");
+          if (user.role === "admin") {
+            router.push("/admin");
+          } else {
+            router.push("/");
+          }
         }, 1200);
       } else {
         setError("Username atau password salah.");
       }
-    }, 1500);
+    }, 1200);
   };
 
   return (

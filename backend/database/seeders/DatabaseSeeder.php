@@ -18,8 +18,24 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'System Administrator',
+            'email' => 'admin',
+            'password' => \Illuminate\Support\Facades\Hash::make('admin123'),
+            'role' => 'admin',
+        ]);
+
+        User::factory()->create([
+            'name' => 'English Teacher',
+            'email' => 'teacher',
+            'password' => \Illuminate\Support\Facades\Hash::make('guru123'),
+            'role' => 'teacher',
+        ]);
+
+        User::factory()->create([
+            'name' => 'Active Student',
+            'email' => 'student',
+            'password' => \Illuminate\Support\Facades\Hash::make('murid123'),
+            'role' => 'student',
         ]);
     }
 }

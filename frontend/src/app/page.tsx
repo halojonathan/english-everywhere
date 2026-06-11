@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 
@@ -216,6 +216,22 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<string | null>(null);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
+
+  useEffect(() => {
+    setUserRole(localStorage.getItem("role"));
+    setUserName(localStorage.getItem("username"));
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("role");
+    localStorage.removeItem("username");
+    setUserRole(null);
+    setUserName(null);
+    window.location.reload();
+  };
+
   return (
     <div className="min-h-screen bg-white text-slate-800 font-sans relative flex flex-col justify-between">
       {/* Dynamic Floating Keyframe Animations */}
@@ -268,16 +284,35 @@ export default function Home() {
             <Link href="/english-corner" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
               English Corner
             </Link>
+            {userRole === "teacher" && (
+              <Link href="/learning-materials" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
+                Learning Materials
+              </Link>
+            )}
+            {userRole === "student" && (
+              <Link href="/payment" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
+                Payment
+              </Link>
+            )}
           </nav>
 
-          {/* Login Button (Desktop) */}
+          {/* Login/Logout Button (Desktop) */}
           <div className="hidden md:block">
-            <Link
-              href="/login"
-              className="bg-[#EF777E] hover:bg-[#eb5e67] text-white font-semibold text-sm px-8 py-2.5 rounded-full transition-all duration-300 shadow-md shadow-red-200 hover:shadow-lg hover:shadow-red-300 inline-block transform hover:-translate-y-0.5"
-            >
-              Login
-            </Link>
+            {userRole ? (
+              <button
+                onClick={handleLogout}
+                className="bg-slate-700 hover:bg-slate-800 text-white font-semibold text-sm px-8 py-2.5 rounded-full transition-all duration-300 shadow-md hover:shadow-lg inline-block transform hover:-translate-y-0.5 cursor-pointer"
+              >
+                Logout ({userName})
+              </button>
+            ) : (
+              <Link
+                href="/login"
+                className="bg-[#EF777E] hover:bg-[#eb5e67] text-white font-semibold text-sm px-8 py-2.5 rounded-full transition-all duration-300 shadow-md shadow-red-200 hover:shadow-lg hover:shadow-red-300 inline-block transform hover:-translate-y-0.5"
+              >
+                Login
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -340,14 +375,44 @@ export default function Home() {
             >
               English Corner
             </Link>
-            <div className="pt-2 border-t border-slate-100">
+            {userRole === "teacher" && (
               <Link
-                href="/login"
+                href="/learning-materials"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center bg-[#EF777E] hover:bg-[#eb5e67] text-white font-semibold text-base py-3 rounded-full transition-colors block shadow-md shadow-red-200"
+                className="block py-2 text-base font-medium text-slate-600 hover:text-slate-900"
               >
-                Login
+                Learning Materials
               </Link>
+            )}
+            {userRole === "student" && (
+              <Link
+                href="/payment"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block py-2 text-base font-medium text-slate-600 hover:text-slate-900"
+              >
+                Payment
+              </Link>
+            )}
+            <div className="pt-2 border-t border-slate-100">
+              {userRole ? (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    handleLogout();
+                  }}
+                  className="w-full text-center bg-slate-700 hover:bg-slate-800 text-white font-semibold text-base py-3 rounded-full transition-colors block shadow-md cursor-pointer"
+                >
+                  Logout ({userName})
+                </button>
+              ) : (
+                <Link
+                  href="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full text-center bg-[#EF777E] hover:bg-[#eb5e67] text-white font-semibold text-base py-3 rounded-full transition-colors block shadow-md shadow-red-200"
+                >
+                  Login
+                </Link>
+              )}
             </div>
           </div>
         )}
@@ -955,6 +1020,20 @@ export default function Home() {
                   English Corner
                 </Link>
               </li>
+              {userRole === "teacher" && (
+                <li>
+                  <Link href="/learning-materials" className="hover:text-[#4AC9CD] transition-colors">
+                    Learning Materials
+                  </Link>
+                </li>
+              )}
+              {userRole === "student" && (
+                <li>
+                  <Link href="/payment" className="hover:text-[#4AC9CD] transition-colors">
+                    Payment
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
 
