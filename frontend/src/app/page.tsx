@@ -262,7 +262,7 @@ export default function Home() {
             <Link href="#classes" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
               Daftar Kelas
             </Link>
-            <Link href="#events" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
+            <Link href="/events" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
               Events
             </Link>
             <Link href="#corner" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
@@ -327,7 +327,7 @@ export default function Home() {
               Daftar Kelas
             </Link>
             <Link
-              href="#events"
+              href="/events"
               onClick={() => setMobileMenuOpen(false)}
               className="block py-2 text-base font-medium text-slate-600 hover:text-slate-900"
             >
@@ -946,7 +946,7 @@ export default function Home() {
                 </Link>
               </li>
               <li>
-                <Link href="#events" className="hover:text-[#4AC9CD] transition-colors">
+                <Link href="/events" className="hover:text-[#4AC9CD] transition-colors">
                   Events
                 </Link>
               </li>
