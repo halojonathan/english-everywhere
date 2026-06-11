@@ -217,7 +217,7 @@ export default function Home() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   return (
-    <div className="min-h-screen bg-white text-slate-800 font-sans overflow-x-hidden relative flex flex-col justify-between">
+    <div className="min-h-screen bg-white text-slate-800 font-sans relative flex flex-col justify-between">
       {/* Dynamic Floating Keyframe Animations */}
       <style jsx global>{`
         @keyframes float-sun {
