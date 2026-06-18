@@ -7,42 +7,18 @@ import Link from "next/link";
 // Brand Logo
 import logoEev from "@/app/images/Navbar/Elements/logo-eev.png";
 
-// Article Images
-import businessEnglishImg from "@/app/images/business-english.png";
-import englishAtHomeImg from "@/app/images/english-at-home.png";
-import usingAAnImg from "@/app/images/using-a-an.png";
-
 interface ArticleItem {
-  slug: string;
+  id: string;
   title: string;
   description: string;
-  image: any;
+  thumbnail: string | null;
+  dateCreated: string;
 }
-
-const articlesData: ArticleItem[] = [
-  {
-    slug: "mastering-business-english",
-    title: "MASTERING BUSINESS ENGLISH: A PRACTICAL GUIDE FOR GLOBAL SUCCESS",
-    description: "Whether you are a student, professional, or entrepreneur, mastering Business English can open doors you never imagined. Why?",
-    image: businessEnglishImg,
-  },
-  {
-    slug: "5-tips-belajar-di-rumah",
-    title: "5 Tips Seru untuk Belajar Bahasa Inggris di Rumah",
-    description: "Mencari cara agar anak-anak tetap semangat belajar? Kami merangkum 5 tips dan trik yang bisa Anda terapkan di rumah dengan mudah dan...",
-    image: englishAtHomeImg,
-  },
-  {
-    slug: "kapan-menggunakan-a-dan-an",
-    title: "Kapan Menggunakan 'A' dan 'An'?",
-    description: "Bingung mengajarkan penggunaan articles? Ini penjelasan sederhana dengan contoh yang mudah diingat si kecil.",
-    image: usingAAnImg,
-  },
-];
 
 export default function EnglishCornerPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [articles, setArticles] = useState<ArticleItem[]>([]);
   
   const [userRole, setUserRole] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
@@ -50,6 +26,24 @@ export default function EnglishCornerPage() {
   useEffect(() => {
     setUserRole(localStorage.getItem("role"));
     setUserName(localStorage.getItem("username"));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/articles")
+      .then(r => r.ok ? r.json() : null)
+      .then(json => {
+        if (json?.status === "success") {
+          const mapped = json.data.map((a: any) => ({
+            id: String(a.id),
+            title: a.title,
+            description: a.description,
+            thumbnail: a.thumbnail || null,
+            dateCreated: a.date_created || "",
+          }));
+          setArticles(mapped);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const handleLogout = () => {
@@ -61,7 +55,7 @@ export default function EnglishCornerPage() {
   };
 
   // Filter Articles
-  const filteredArticles = articlesData.filter((article) =>
+  const filteredArticles = articles.filter((article) =>
     article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     article.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -281,25 +275,31 @@ export default function EnglishCornerPage() {
           <div className="mt-16">
             {filteredArticles.length === 0 ? (
               <p className="text-slate-400 font-poppins text-sm pt-2 italic text-center">
-                Tidak ada artikel yang cocok dengan pencarian Anda.
+                {articles.length === 0 ? "Memuat artikel..." : "Tidak ada artikel yang cocok dengan pencarian Anda."}
               </p>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
                 {filteredArticles.map((article) => (
                   <Link
-                    href={`/english-corner/${article.slug}`}
-                    key={article.slug}
+                    href={`/english-corner/${article.id}`}
+                    key={article.id}
                     className="bg-white border border-slate-200/60 rounded-[24px] overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col cursor-pointer group"
                   >
-                    {/* Thumbnail Image */}
-                    <div className="w-full h-[220px] relative bg-slate-100 flex-shrink-0">
-                      <Image
-                        src={article.image}
-                        alt={article.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        sizes="(max-width: 768px) 100vw, 400px"
-                      />
+                    {/* Thumbnail */}
+                    <div className="w-full h-[220px] relative bg-slate-100 flex-shrink-0 overflow-hidden">
+                      {article.thumbnail ? (
+                        <img
+                          src={article.thumbnail}
+                          alt={article.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-[#4AC9CD] to-indigo-500 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                          <svg className="w-14 h-14 text-white/60" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                          </svg>
+                        </div>
+                      )}
                     </div>
                     
                     {/* Card Content */}
@@ -312,6 +312,9 @@ export default function EnglishCornerPage() {
                           {article.description}
                         </p>
                       </div>
+                      {article.dateCreated && (
+                        <p className="font-poppins text-[10px] text-slate-400">{article.dateCreated}</p>
+                      )}
                     </div>
                   </Link>
                 ))}

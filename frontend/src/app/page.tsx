@@ -43,74 +43,62 @@ const programsData: Record<"regular" | "intensive" | "others", Program[]> = {
   regular: [
     {
       title: "Funny Phonics",
-      info: "40xLevel | 2.300.000",
+      info: "Level 1-2 | 2.300.000",
       desc: "Belajar membaca & mengeja seru dengan metode Phonics.",
       image: funnyPhonicsImg,
     },
     {
       title: "Hi Kids!",
-      info: "40xLevel | 2.300.000",
+      info: "Level 1-3 | 2.300.000",
       desc: "Kelas dasar untuk anak. Fokus pada Bahasa Inggris sehari-hari.",
       image: hiKidsImg,
     },
     {
       title: "Oxford Phonics",
-      info: "40xLevel | 2.300.000",
+      info: "Level 1-5 | 2.300.000",
       desc: "Metode Phonics dari Oxford untuk membaca & menulis handal.",
       image: oxfordPhonicsImg,
     },
     {
       title: "Abracadabra",
-      info: "40xLevel | 2.300.000",
+      info: "Level 1-6 | 2.300.000",
       desc: "Program seru untuk kosakata dasar & percakapan anak.",
       image: abracadabraImg,
     },
     {
       title: "Get Smart",
-      info: "40xLevel | 2.300.000",
+      info: "Level 1-6 | 2.300.000",
       desc: "Kurikulum dinamis, tingkatkan 4 kemampuan dasar bahasa.",
       image: getSmartImg,
       badge: "9-15 Tahun",
     },
     {
       title: "Full Blast",
-      info: "60xLevel | 3.600.000",
+      info: "Level 1-6 | 3.600.000",
       desc: "Program lengkap untuk siswa. Kuasai English level menengah.",
       image: fullBlastImg,
     },
   ],
   intensive: [
     {
-      title: "Intensive Speaking",
-      info: "20xLevel | 1.800.000",
-      desc: "Fokus penuh pada kelancaran berbicara dan pengucapan (pronunciation).",
-      image: intensiveSpeakingImg,
-    },
-    {
-      title: "Academic Writing",
-      info: "20xLevel | 2.000.000",
-      desc: "Kuasai penulisan esai, laporan, dan tata bahasa akademis secara intensif.",
-      image: academicWritingImg,
-    },
-    {
-      title: "TOEFL/IELTS Prep",
-      info: "30xLevel | 3.200.000",
+      title: "Test Preparation",
+      info: "TOEFL & IELTS Prep | 3.200.000",
       desc: "Kelas persiapan intensif untuk meraih skor maksimal dalam ujian IELTS/TOEFL.",
       image: toeflPrepImg,
+    },
+    {
+      title: "Conversation Class",
+      info: "Speaking Focus | 1.800.000",
+      desc: "Fokus penuh pada kelancaran berbicara, pengucapan (pronunciation), dan rasa percaya diri.",
+      image: intensiveSpeakingImg,
     },
   ],
   others: [
     {
       title: "Private Class",
-      info: "Custom Level | Bespoke",
-      desc: "Kelas privat 1-on-1 dengan jadwal dan kurikulum yang disesuaikan kebutuhan.",
+      info: "Offline / Online | Bespoke",
+      desc: "Kelas privat 1-on-1 dengan jadwal dan kurikulum yang disesuaikan kebutuhan (Offline/Online).",
       image: privateClassImg,
-    },
-    {
-      title: "Holiday Camp",
-      info: "10xLevel | 1.200.000",
-      desc: "Program belajar sambil bermain yang seru selama liburan sekolah.",
-      image: holidayCampImg,
     },
   ],
 };
@@ -285,9 +273,14 @@ export default function Home() {
               English Corner
             </Link>
             {userRole === "teacher" && (
-              <Link href="/learning-materials" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
-                Learning Materials
-              </Link>
+              <>
+                <Link href="/learning-materials" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
+                  Learning Materials
+                </Link>
+                <Link href="/attendance" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
+                  Attendance
+                </Link>
+              </>
             )}
             {userRole === "student" && (
               <Link href="/payment" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
@@ -376,13 +369,22 @@ export default function Home() {
               English Corner
             </Link>
             {userRole === "teacher" && (
-              <Link
-                href="/learning-materials"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block py-2 text-base font-medium text-slate-600 hover:text-slate-900"
-              >
-                Learning Materials
-              </Link>
+              <>
+                <Link
+                  href="/learning-materials"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block py-2 text-base font-medium text-slate-600 hover:text-slate-900"
+                >
+                  Learning Materials
+                </Link>
+                <Link
+                  href="/attendance"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block py-2 text-base font-medium text-slate-600 hover:text-slate-900"
+                >
+                  Attendance
+                </Link>
+              </>
             )}
             {userRole === "student" && (
               <Link
@@ -610,9 +612,10 @@ export default function Home() {
           {/* Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             {programsData[activeTab].map((program, index) => (
-              <div
+              <Link
                 key={index}
-                className="bg-white rounded-[24px] overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full group"
+                href="/appointment"
+                className="bg-white rounded-[24px] overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full group cursor-pointer text-left"
               >
                 {/* Program Card Image */}
                 <div className="relative w-full h-[200px] sm:h-[220px] overflow-hidden bg-slate-50">
@@ -646,7 +649,7 @@ export default function Home() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -1046,23 +1049,33 @@ export default function Home() {
             {/* Address */}
             <div className="space-y-1 font-poppins text-sm text-slate-500">
               <p className="font-bold text-slate-700">Address:</p>
-              <p className="leading-relaxed font-normal">
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Cendana+Residence+Blok+H8+No+6%2C+South+Tangerang+15416"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="leading-relaxed font-normal hover:text-[#4AC9CD] transition-colors block"
+              >
                 Cendana Residence Blok H8 No 6,
                 <br />
                 South Tangerang 15416
-              </p>
-              <p className="leading-relaxed font-normal pt-2">
+              </a>
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Jl.+Soka+Indah+no.+13+Dukuhwaluh%2C+Kembaran%2C+Purwokerto+53182"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="leading-relaxed font-normal pt-2 hover:text-[#4AC9CD] transition-colors block"
+              >
                 Jl. Soka Indah no. 13 Dukuhwaluh,
                 <br />
                 Kembaran, Purwokerto 53182
-              </p>
+              </a>
             </div>
 
             {/* Phone */}
             <div className="space-y-1 font-poppins text-sm text-slate-500 pt-2">
               <p className="font-bold text-slate-700">Phone number:</p>
               <p className="font-normal hover:text-[#4AC9CD] transition-colors">
-                <a href="tel:+628997626888">+628997626888</a>
+                <a href="https://wa.me/628997626888" target="_blank" rel="noopener noreferrer">+628997626888</a>
               </p>
             </div>
 
@@ -1084,11 +1097,12 @@ export default function Home() {
                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                   </svg>
                 </a>
-                {/* Email */}
-                <a href="mailto:info@englisheverywhere.com" className="hover:text-[#4AC9CD] transition-colors" aria-label="Email">
+                {/* Shopee */}
+                <a href="https://shopee.co.id" target="_blank" rel="noopener noreferrer" className="hover:text-[#EF4D2D] transition-colors" aria-label="Shopee">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <path d="M16 10a4 4 0 0 1-8 0"></path>
                   </svg>
                 </a>
                 {/* Phone Call */}

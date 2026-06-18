@@ -14,9 +14,9 @@ export default function StatusPage() {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<BackendStatus | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [backendUrl, setBackendUrl] = useState("http://127.0.0.1:8000");
+  const [backendUrl, setBackendUrl] = useState("");
 
-  const checkConnection = async (url = backendUrl) => {
+  const checkConnection = async (url = backendUrl || "http://127.0.0.1:8000") => {
     setLoading(true);
     setError(null);
     try {
@@ -36,7 +36,7 @@ export default function StatusPage() {
   };
 
   useEffect(() => {
-    checkConnection();
+    checkConnection("http://127.0.0.1:8000");
   }, []);
 
   return (

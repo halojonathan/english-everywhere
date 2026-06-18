@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 
 // Brand Logo
@@ -13,65 +13,15 @@ import doc1Img from "@/app/images/event-docs-1.png";
 import doc2Img from "@/app/images/event-docs-2.png";
 import doc3Img from "@/app/images/event-docs-3.png";
 
-// Past event card thumbnail representations
-import funnyPhonicsImg from "@/app/images/funny-phonics.png";
-import hiKidsImg from "@/app/images/hi-kids.png";
-
 interface EventItem {
   id: string;
   title: string;
-  price: string;
   date: string;
   time: string;
   location: string;
-  image: StaticImageData;
   isUpcoming: boolean;
 }
 
-const eventsData: EventItem[] = [
-  // Upcoming Events
-  {
-    id: "upcoming-1",
-    title: "Summer English Camp 2026",
-    price: "150K",
-    date: "2026-07-15",
-    time: "09.00 - 15.00 WIB",
-    location: "Center BSD & Alam Sutera",
-    image: hiKidsImg,
-    isUpcoming: true,
-  },
-  {
-    id: "upcoming-2",
-    title: "Speaking Masterclass for Kids",
-    price: "FREE",
-    date: "2026-08-05",
-    time: "14.00 - 16.00 WIB",
-    location: "Online via Zoom",
-    image: funnyPhonicsImg,
-    isUpcoming: true,
-  },
-  // Past Events (Mockup)
-  {
-    id: "past-1",
-    title: "Test Event",
-    price: "25K",
-    date: "2026-02-24",
-    time: "13.00 - 15.00 WIB",
-    location: "Bintaro",
-    image: hiKidsImg,
-    isUpcoming: false,
-  },
-  {
-    id: "past-2",
-    title: "Funtastic Build — Open House English Everywhere",
-    price: "FREE",
-    date: "2026-01-15",
-    time: "19.00 - 20.30 WIB",
-    location: "Bintaro",
-    image: funnyPhonicsImg,
-    isUpcoming: false,
-  },
-];
 
 const docPhotos = [
   { src: doc1Img, caption: "Keseruan Merakit Bricks & Belajar Phonics" },
@@ -82,6 +32,7 @@ const docPhotos = [
 export default function EventsPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [events, setEvents] = useState<EventItem[]>([]);
   
   const [userRole, setUserRole] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
@@ -89,6 +40,25 @@ export default function EventsPage() {
   useEffect(() => {
     setUserRole(localStorage.getItem("role"));
     setUserName(localStorage.getItem("username"));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/events")
+      .then(r => r.ok ? r.json() : null)
+      .then(json => {
+        if (json?.status === "success") {
+          const mapped = json.data.map((e: any) => ({
+            id: String(e.id),
+            title: e.title,
+            date: e.date,
+            time: e.time || "",
+            location: e.location,
+            isUpcoming: e.type === "Upcoming",
+          }));
+          setEvents(mapped);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const handleLogout = () => {
@@ -113,13 +83,27 @@ export default function EventsPage() {
   // Carousel State
   const [activeSlide, setActiveSlide] = useState(0);
 
-  // Filter Events by Search
-  const filteredEvents = eventsData.filter((event) =>
-    event.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Tab and Pagination State
+  const [activeTab, setActiveTab] = useState<"all" | "upcoming" | "past">("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
 
-  const upcomingEvents = filteredEvents.filter((event) => event.isUpcoming);
-  const pastEvents = filteredEvents.filter((event) => !event.isUpcoming);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeTab, searchQuery]);
+
+  // Filter Events by Tab and Search
+  const filteredEvents = events.filter((event) => {
+    const matchesSearch = event.title.toLowerCase().includes(searchQuery.toLowerCase());
+    if (!matchesSearch) return false;
+    if (activeTab === "upcoming") return event.isUpcoming;
+    if (activeTab === "past") return !event.isUpcoming;
+    return true;
+  });
+
+  const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedEvents = filteredEvents.slice(startIndex, startIndex + itemsPerPage);
 
   const handleRegisterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -352,46 +336,76 @@ export default function EventsPage() {
             </div>
           </div>
 
-          {/* 1. Upcoming Events Section */}
-          <div className="mt-16 space-y-6">
-            <h2 className="font-satoshi text-xl sm:text-2xl font-black text-[#1E293B] tracking-tight">
-              Upcoming Events
-            </h2>
+          {/* Tab Switcher */}
+          <div className="flex justify-center items-center gap-3 sm:gap-4 flex-wrap mt-8">
+            <button
+              onClick={() => setActiveTab("all")}
+              className={`font-satoshi text-xs sm:text-sm font-bold tracking-wider px-6 py-2.5 rounded-full border transition-all duration-300 cursor-pointer shadow-md ${
+                activeTab === "all"
+                  ? "bg-[#4AC9CD] border-[#4AC9CD] text-white"
+                  : "bg-white text-slate-600 border-slate-200 hover:border-slate-350"
+              }`}
+            >
+              ALL EVENTS
+            </button>
+            <button
+              onClick={() => setActiveTab("upcoming")}
+              className={`font-satoshi text-xs sm:text-sm font-bold tracking-wider px-6 py-2.5 rounded-full border transition-all duration-300 cursor-pointer shadow-md ${
+                activeTab === "upcoming"
+                  ? "bg-[#4AC9CD] border-[#4AC9CD] text-white"
+                  : "bg-white text-slate-600 border-slate-200 hover:border-slate-350"
+              }`}
+            >
+              UPCOMING
+            </button>
+            <button
+              onClick={() => setActiveTab("past")}
+              className={`font-satoshi text-xs sm:text-sm font-bold tracking-wider px-6 py-2.5 rounded-full border transition-all duration-300 cursor-pointer shadow-md ${
+                activeTab === "past"
+                  ? "bg-[#4AC9CD] border-[#4AC9CD] text-white"
+                  : "bg-white text-slate-600 border-slate-200 hover:border-slate-350"
+              }`}
+            >
+              PAST EVENTS
+            </button>
+          </div>
 
-            {upcomingEvents.length === 0 ? (
-              <p className="text-slate-400 font-poppins text-sm pt-2 italic">
-                Tidak ada upcoming events yang cocok dengan pencarian Anda.
+          {/* Events List Grid */}
+          <div className="mt-12 space-y-8">
+            {paginatedEvents.length === 0 ? (
+              <p className="text-slate-400 font-poppins text-sm pt-8 italic text-center">
+                Tidak ada event yang ditemukan.
               </p>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                {upcomingEvents.map((event) => (
+                {paginatedEvents.map((event) => (
                   <div
                     key={event.id}
-                    onClick={() => setSelectedUpcomingEvent(event)}
-                    className="bg-[#F8FAFC] border border-slate-200/60 rounded-[20px] p-6 hover:shadow-lg transition-all duration-300 flex flex-col sm:flex-row gap-6 cursor-pointer hover:border-indigo-400 group"
+                    onClick={() => event.isUpcoming ? setSelectedUpcomingEvent(event) : setSelectedPastEvent(event)}
+                    className="bg-[#F8FAFC] border border-slate-200/60 rounded-[20px] p-6 hover:shadow-lg transition-all duration-300 flex flex-col sm:flex-row gap-6 cursor-pointer hover:border-[#4AC9CD] group animate-fade-in"
                   >
-                    {/* Thumbnail Image */}
-                    <div className="w-full sm:w-[150px] h-[120px] relative rounded-xl overflow-hidden flex-shrink-0 bg-slate-200">
-                      <Image
-                        src={event.image}
-                        alt={event.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        sizes="150px"
-                      />
+                    {/* Thumbnail Placeholder */}
+                    <div className={`w-full sm:w-[150px] h-[120px] relative rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center ${
+                      event.isUpcoming
+                        ? "bg-gradient-to-br from-[#4AC9CD] to-indigo-500"
+                        : "bg-gradient-to-br from-slate-400 to-slate-600"
+                    }`}>
+                      <svg className="w-10 h-10 text-white/60" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                      </svg>
+                      {/* Badge category indicator */}
+                      <span className={`absolute top-2 left-2 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase text-white shadow-sm ${
+                        event.isUpcoming ? "bg-indigo-600" : "bg-slate-500"
+                      }`}>
+                        {event.isUpcoming ? "Upcoming" : "Past"}
+                      </span>
                     </div>
                     {/* Meta info */}
                     <div className="flex-1 flex flex-col justify-between">
                       <div className="space-y-2">
-                        <div className="flex justify-between items-start gap-4">
-                          <h3 className="font-satoshi text-base sm:text-lg font-bold text-[#1E293B] leading-snug group-hover:text-indigo-600 transition-colors">
-                            {event.title}
-                          </h3>
-                          <span className="font-satoshi text-sm sm:text-base font-black text-indigo-600 flex-shrink-0">
-                            {event.price}
-                          </span>
-                        </div>
-                        
+                        <h3 className="font-satoshi text-base sm:text-lg font-bold text-[#1E293B] leading-snug group-hover:text-[#4AC9CD] transition-colors">
+                          {event.title}
+                        </h3>
                         <div className="space-y-1 font-poppins text-xs text-slate-500 font-medium">
                           <p className="flex items-center gap-2">
                             <span className="text-slate-400">📅</span> {event.date}
@@ -411,64 +425,46 @@ export default function EventsPage() {
             )}
           </div>
 
-          {/* 2. Past Events Section */}
-          <div className="mt-20 space-y-6">
-            <h2 className="font-satoshi text-xl sm:text-2xl font-black text-[#1E293B] tracking-tight">
-              Past Events
-            </h2>
-
-            {pastEvents.length === 0 ? (
-              <p className="text-slate-400 font-poppins text-sm pt-2 italic">
-                Tidak ada past events yang cocok dengan pencarian Anda.
+          {/* Pagination Controls */}
+          {filteredEvents.length > 0 && (
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-slate-100 mt-12 font-poppins text-xs text-slate-500 font-semibold">
+              <p>
+                Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredEvents.length)} of {filteredEvents.length} entries
               </p>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                {pastEvents.map((event) => (
-                  <div
-                    key={event.id}
-                    onClick={() => setSelectedPastEvent(event)}
-                    className="bg-[#F8FAFC] border border-slate-200/60 rounded-[20px] p-6 hover:shadow-lg transition-all duration-300 flex flex-col sm:flex-row gap-6 cursor-pointer hover:border-indigo-400 group"
+              
+              <div className="flex items-center gap-2">
+                <button
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  className="px-3.5 py-2 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 disabled:opacity-50 disabled:hover:bg-white cursor-pointer select-none transition-colors bg-white"
+                >
+                  Previous
+                </button>
+                
+                {Array.from({ length: totalPages }).map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentPage(idx + 1)}
+                    className={`w-8 h-8 rounded-lg flex items-center justify-center cursor-pointer select-none transition-colors border ${
+                      currentPage === idx + 1
+                        ? "bg-[#4AC9CD] border-[#4AC9CD] text-white font-bold"
+                        : "border-slate-200 hover:bg-slate-50 text-slate-600 bg-white"
+                    }`}
                   >
-                    {/* Thumbnail Image */}
-                    <div className="w-full sm:w-[150px] h-[120px] relative rounded-xl overflow-hidden flex-shrink-0 bg-slate-200">
-                      <Image
-                        src={event.image}
-                        alt={event.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        sizes="150px"
-                      />
-                    </div>
-                    {/* Meta info */}
-                    <div className="flex-1 flex flex-col justify-between">
-                      <div className="space-y-2">
-                        <div className="flex justify-between items-start gap-4">
-                          <h3 className="font-satoshi text-base sm:text-lg font-bold text-[#1E293B] leading-snug group-hover:text-indigo-600 transition-colors">
-                            {event.title}
-                          </h3>
-                          <span className="font-satoshi text-sm sm:text-base font-black text-slate-500 flex-shrink-0">
-                            {event.price}
-                          </span>
-                        </div>
-                        
-                        <div className="space-y-1 font-poppins text-xs text-slate-500 font-medium">
-                          <p className="flex items-center gap-2">
-                            <span className="text-slate-400">📅</span> {event.date}
-                          </p>
-                          <p className="flex items-center gap-2">
-                            <span className="text-slate-400">🕒</span> {event.time}
-                          </p>
-                          <p className="flex items-center gap-2">
-                            <span className="text-slate-400">📍</span> {event.location}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    {idx + 1}
+                  </button>
                 ))}
+
+                <button
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  className="px-3.5 py-2 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 disabled:opacity-50 disabled:hover:bg-white cursor-pointer select-none transition-colors bg-white"
+                >
+                  Next
+                </button>
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
         </div>
       </main>
@@ -507,9 +503,6 @@ export default function EventsPage() {
                   <h3 className="font-satoshi text-xl sm:text-2xl lg:text-[26px] font-black text-[#1E293B] leading-tight">
                     🎉 {selectedUpcomingEvent.title} 🎉
                   </h3>
-                  <span className="font-satoshi text-base sm:text-lg font-black text-emerald-600 bg-emerald-50 px-3 py-1 rounded-md">
-                    {selectedUpcomingEvent.price}
-                  </span>
                 </div>
 
                 {/* Event Information Bulletpoints */}
@@ -759,21 +752,31 @@ export default function EventsPage() {
             </h4>
             <div className="space-y-1 font-poppins text-sm text-slate-500">
               <p className="font-bold text-slate-700">Address:</p>
-              <p className="leading-relaxed font-normal">
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Cendana+Residence+Blok+H8+No+6%2C+South+Tangerang+15416"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="leading-relaxed font-normal hover:text-[#4AC9CD] transition-colors block"
+              >
                 Cendana Residence Blok H8 No 6,
                 <br />
                 South Tangerang 15416
-              </p>
-              <p className="leading-relaxed font-normal pt-2">
+              </a>
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Jl.+Soka+Indah+no.+13+Dukuhwaluh%2C+Kembaran%2C+Purwokerto+53182"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="leading-relaxed font-normal pt-2 hover:text-[#4AC9CD] transition-colors block"
+              >
                 Jl. Soka Indah no. 13 Dukuhwaluh,
                 <br />
                 Kembaran, Purwokerto 53182
-              </p>
+              </a>
             </div>
             <div className="space-y-1 font-poppins text-sm text-slate-500 pt-2">
               <p className="font-bold text-slate-700">Phone number:</p>
               <p className="font-normal hover:text-[#4AC9CD] transition-colors">
-                <a href="tel:+628997626888">+628997626888</a>
+                <a href="https://wa.me/628997626888" target="_blank" rel="noopener noreferrer">+628997626888</a>
               </p>
             </div>
             <div className="space-y-2 font-poppins text-sm text-slate-500 pt-2">
@@ -791,10 +794,12 @@ export default function EventsPage() {
                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                   </svg>
                 </a>
-                <a href="mailto:info@englisheverywhere.com" className="hover:text-[#4AC9CD] transition-colors" aria-label="Email">
+                {/* Shopee */}
+                <a href="https://shopee.co.id" target="_blank" rel="noopener noreferrer" className="hover:text-[#EF4D2D] transition-colors" aria-label="Shopee">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <path d="M16 10a4 4 0 0 1-8 0"></path>
                   </svg>
                 </a>
                 <a href="tel:+628997626888" className="hover:text-[#4AC9CD] transition-colors" aria-label="Phone Call">

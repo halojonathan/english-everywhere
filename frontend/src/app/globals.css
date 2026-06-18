@@ -24,3 +24,8 @@ body {
   font-family: var(--font-poppins), sans-serif;
   overflow-x: hidden;
 }
+
+::placeholder {
+  font-style: italic !important;
+}
+

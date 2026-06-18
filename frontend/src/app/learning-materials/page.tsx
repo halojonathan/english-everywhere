@@ -65,10 +65,30 @@ export default function LearningMaterialsPage() {
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
 
+  const [alertModal, setAlertModal] = useState<{ isOpen: boolean; title: string; message: string }>({
+    isOpen: false,
+    title: "",
+    message: ""
+  });
+
   useEffect(() => {
     setUserRole(localStorage.getItem("role"));
     setUserName(localStorage.getItem("username"));
     setIsLoaded(true);
+
+    if (typeof window !== "undefined") {
+      const originalAlert = window.alert;
+      window.alert = (msg: string) => {
+        setAlertModal({
+          isOpen: true,
+          title: "Notifikasi",
+          message: msg
+        });
+      };
+      return () => {
+        window.alert = originalAlert;
+      };
+    }
   }, []);
 
   const handleLogout = () => {
@@ -419,6 +439,33 @@ export default function LearningMaterialsPage() {
           </div>
         </div>
       </footer>
+
+      {/* ========================================================================= */}
+      {/* CUSTOM ALERT/NOTIFICATION MODAL */}
+      {/* ========================================================================= */}
+      {alertModal.isOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-fade-in">
+          <div className="bg-white rounded-3xl shadow-xl w-full max-w-sm overflow-hidden animate-scale-up border border-slate-100 p-6 text-center space-y-4">
+            <div className="w-12 h-12 rounded-full bg-amber-50 border border-amber-100 flex items-center justify-center mx-auto text-amber-500">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <div className="space-y-1">
+              <h4 className="font-satoshi text-base font-black text-slate-800">{alertModal.title}</h4>
+              <p className="font-poppins text-xs text-slate-500 leading-relaxed">{alertModal.message}</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setAlertModal(prev => ({ ...prev, isOpen: false }))}
+              className="w-full py-2.5 bg-[#4AC9CD] hover:bg-[#3db3b7] text-white font-bold rounded-xl font-poppins text-xs transition-all cursor-pointer shadow-md text-center"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

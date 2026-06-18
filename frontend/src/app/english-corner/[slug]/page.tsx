@@ -8,104 +8,20 @@ import { notFound } from "next/navigation";
 // Brand Logo
 import logoEev from "@/app/images/Navbar/Elements/logo-eev.png";
 
-// Article Images
-import businessEnglishImg from "@/app/images/business-english.png";
-import englishAtHomeImg from "@/app/images/english-at-home.png";
-import usingAAnImg from "@/app/images/using-a-an.png";
-
 interface ArticleDetail {
+  id: string;
   title: string;
-  image: any;
-  date: string;
-  intro: string;
-  sections: {
-    heading: string;
-    body: string;
-  }[];
+  thumbnail: string | null;
+  dateCreated: string;
+  introParagraphs: string[];
+  sections: { heading: string; body: string }[];
 }
-
-const articlesDetailData: Record<string, ArticleDetail> = {
-  "mastering-business-english": {
-    title: "Mastering Business English: A Practical Guide for Global Success",
-    image: businessEnglishImg,
-    date: "2026-06-10",
-    intro: "Di era globalisasi saat ini, bahasa Inggris bukan lagi sekadar nilai tambah, melainkan kebutuhan utama—khususnya dalam dunia profesional. Menguasai Business English membantu Anda berkomunikasi secara efektif dengan klien internasional, menulis email formal dengan percaya diri, dan memimpin presentasi dengan lancar.",
-    sections: [
-      {
-        heading: "1. Fokus pada Kosakata Profesional (Professional Vocabulary)",
-        body: "Hindari bahasa gaul (slang) dan mulailah menggunakan terminologi bisnis yang tepat. Misalnya, gunakan kata 'collaborate' daripada 'work together', atau 'schedule' daripada 'make a time' untuk memancarkan aura profesional.",
-      },
-      {
-        heading: "2. Pelajari Struktur Email Bisnis yang Sopan dan Jelas",
-        body: "Email adalah komunikasi bisnis yang paling sering digunakan. Pastikan subjek email ditulis dengan jelas, gunakan salam formal seperti 'Dear Mr. Smith', langsung sampaikan poin utama, dan akhiri dengan penutup yang sopan seperti 'Sincerely' atau 'Best regards'.",
-      },
-      {
-        heading: "3. Latih Kemampuan Aktif Mendengarkan (Active Listening)",
-        body: "Saat rapat dengan rekan kerja global, jangan hanya fokus pada apa yang ingin Anda katakan selanjutnya. Dengarkan baik-baik intonasi, istilah yang mereka gunakan, dan berikan konfirmasi seperti 'Just to clarify, you mean...' untuk menghindari kesalahpahaman.",
-      },
-      {
-        heading: "4. Sederhanakan Komunikasi Anda",
-        body: "Business English yang baik tidak harus rumit dengan kosakata yang sulit dimengerti. Lebih baik menggunakan kalimat yang pendek, jelas, dan langsung ke tujuan agar pesan Anda mudah dipahami oleh semua orang dari berbagai latar belakang budaya.",
-      },
-    ],
-  },
-  "5-tips-belajar-di-rumah": {
-    title: "5 Tips Seru untuk Belajar Bahasa Inggris di Rumah",
-    image: englishAtHomeImg,
-    date: "2026-06-08",
-    intro: "Belajar Bahasa Inggris tidak harus selalu membosankan dengan buku tebal atau hafalan grammar. Dengan sedikit kreativitas, Anda bisa mengubah rumah menjadi sekolah Bahasa Inggris pribadi yang menyenangkan.",
-    sections: [
-      {
-        heading: "1. Ubah Media Hiburan Anda Menjadi Kelas Bahasa Inggris",
-        body: "Alihkan kebiasaan menonton atau mendengarkan Anda sepenuhnya ke dalam Bahasa Inggris. Ini adalah cara paling efektif untuk melatih listening skill dan memperkaya kosakata secara kontekstual.",
-      },
-      {
-        heading: "2. Labeli Benda-Benda di Rumah",
-        body: "Tempelkan sticky note pada benda-benda di sekitar rumah dengan nama bahasa Inggrisnya. Misalnya 'Refrigerator', 'Mirror', 'Wardrobe'. Ini membantu mengingat vocabulary sehari-hari tanpa terasa sedang belajar.",
-      },
-      {
-        heading: "3. Biasakan Self-Talk dalam Bahasa Inggris",
-        body: "Cobalah untuk menarasikan kegiatan Anda sehari-hari dalam bahasa Inggris. 'I am making coffee now', 'I need to find my keys'. Ini melatih kelancaran berbicara dan berpikir dalam bahasa Inggris.",
-      },
-      {
-        heading: "4. Buat Game Word Scavenger Hunt",
-        body: "Sembunyikan benda-benda di sekitar rumah dan berikan petunjuk sederhana dalam bahasa Inggris kepada si kecil. Ini melatih kemampuan membaca, mendengarkan, serta pemahaman instruksi.",
-      },
-      {
-        heading: "5. Praktikkan Roleplay Sederhana bersama Keluarga",
-        body: "Gunakan skenario kehidupan sehari-hari untuk bermain peran dalam Bahasa Inggris, misalnya memesan makanan di kafe atau menjadi kasir swalayan. Ini meningkatkan rasa percaya diri anak dalam berbicara.",
-      },
-    ],
-  },
-  "kapan-menggunakan-a-dan-an": {
-    title: "Kapan Menggunakan 'A' dan 'An'?",
-    image: usingAAnImg,
-    date: "2026-06-05",
-    intro: "Mengajarkan grammar dasar kepada anak-anak terkadang menantang. Salah satu materi paling dasar yang wajib dikuasai sejak dini adalah penggunaan Articles (kata sandang) 'A' dan 'An'. Meskipun terlihat sederhana, banyak yang masih sering salah menggunakannya.",
-    sections: [
-      {
-        heading: "1. Aturan Dasar: Perhatikan Bunyi, Bukan Huruf!",
-        body: "Kunci utama penggunaan 'A' dan 'An' bukan terletak pada huruf pertama kata tersebut, melainkan pada bunyi pengucapannya. Gunakan 'A' sebelum kata yang berbunyi konsonan (seperti b, c, d, f, g, dst), dan gunakan 'An' sebelum kata yang berbunyi vokal (a, i, u, e, o).",
-      },
-      {
-        heading: "2. Contoh Kata dengan Bunyi Vokal (Menggunakan 'An')",
-        body: "Misalnya 'an apple' (bunyi vokal 'a'), 'an egg' (bunyi vokal 'e'), atau 'an umbrella' (bunyi vokal 'u'). Perhatikan juga kata seperti 'an hour', meskipun diawali dengan huruf 'h', cara pengucapannya berbunyi vokal 'our', sehingga kita harus menggunakan 'an'.",
-      },
-      {
-        heading: "3. Contoh Kata dengan Bunyi Konsonan (Menggunakan 'A')",
-        body: "Misalnya 'a book' (bunyi konsonan 'b'), 'a car' (bunyi konsonan 'k'), atau 'a dog' (bunyi konsonan 'd'). Perhatikan juga kata seperti 'a university', meskipun diawali dengan huruf 'u', cara pengucapannya berbunyi konsonan 'yu-ni-ver-si-ti', sehingga kita menggunakan 'a'.",
-      },
-      {
-        heading: "4. Latihan Seru untuk Si Kecil",
-        body: "Ajak si kecil bermain dengan menunjuk benda-benda di rumah dan menanyakan apakah harus menggunakan 'A' atau 'An'. Berikan pujian setiap kali mereka menjawab dengan benar untuk membangun rasa percaya diri mereka!",
-      },
-    ],
-  },
-};
 
 export default function ArticleDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [article, setArticle] = useState<ArticleDetail | null>(null);
+  const [loading, setLoading] = useState(true);
   
   const [userRole, setUserRole] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
@@ -115,6 +31,32 @@ export default function ArticleDetailPage({ params }: { params: Promise<{ slug: 
     setUserName(localStorage.getItem("username"));
   }, []);
 
+  useEffect(() => {
+    setLoading(true);
+    fetch(`http://127.0.0.1:8000/api/articles/${slug}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(json => {
+        if (json?.status === "success") {
+          const a = json.data;
+          setArticle({
+            id: String(a.id),
+            title: a.title,
+            thumbnail: a.thumbnail || null,
+            dateCreated: a.date_created || "",
+            introParagraphs: Array.isArray(a.intro_paragraphs) ? a.intro_paragraphs : [],
+            sections: Array.isArray(a.sections) ? a.sections : [],
+          });
+        } else {
+          setArticle(null);
+        }
+        setLoading(false);
+      })
+      .catch(() => {
+        setArticle(null);
+        setLoading(false);
+      });
+  }, [slug]);
+
   const handleLogout = () => {
     localStorage.removeItem("role");
     localStorage.removeItem("username");
@@ -123,9 +65,7 @@ export default function ArticleDetailPage({ params }: { params: Promise<{ slug: 
     window.location.reload();
   };
 
-  const article = articlesDetailData[slug];
-
-  if (!article) {
+  if (!loading && !article) {
     notFound();
   }
 
@@ -329,42 +269,68 @@ export default function ArticleDetailPage({ params }: { params: Promise<{ slug: 
           </Link>
 
           {/* Article Header */}
-          <div className="space-y-4 mb-8 text-center sm:text-left">
-            <h1 className="font-satoshi text-2xl sm:text-3xl md:text-4xl font-black text-[#1E293B] leading-tight">
-              {article.title}
-            </h1>
-            <p className="font-poppins text-xs text-slate-400">
-              Published on {article.date}
-            </p>
-          </div>
+          {loading ? (
+            <div className="space-y-4 mb-8 animate-pulse">
+              <div className="h-10 bg-slate-100 rounded-xl w-3/4 mx-auto sm:mx-0" />
+              <div className="h-4 bg-slate-100 rounded w-32" />
+            </div>
+          ) : (
+            <div className="space-y-4 mb-8 text-center sm:text-left">
+              <h1 className="font-satoshi text-2xl sm:text-3xl md:text-4xl font-black text-[#1E293B] leading-tight">
+                {article!.title}
+              </h1>
+              {article!.dateCreated && (
+                <p className="font-poppins text-xs text-slate-400">
+                  Published on {article!.dateCreated}
+                </p>
+              )}
+            </div>
+          )}
 
           {/* Banner Image */}
           <div className="w-full h-[250px] sm:h-[400px] md:h-[450px] relative rounded-[24px] overflow-hidden bg-slate-100 shadow-md mb-8">
-            <Image
-              src={article.image}
-              alt={article.title}
-              fill
-              className="object-cover"
-              priority
-              sizes="(max-width: 1024px) 100vw, 900px"
-            />
+            {loading ? (
+              <div className="w-full h-full bg-slate-100 animate-pulse" />
+            ) : article?.thumbnail ? (
+              <img
+                src={article.thumbnail}
+                alt={article.title}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-[#4AC9CD] to-indigo-500 flex items-center justify-center">
+                <svg className="w-20 h-20 text-white/50" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                </svg>
+              </div>
+            )}
           </div>
 
           {/* Article Body */}
-          <article className="font-poppins text-sm sm:text-base text-slate-700 leading-relaxed space-y-6">
-            <p className="font-medium text-slate-800">{article.intro}</p>
-            
-            {article.sections.map((sec, idx) => (
-              <div key={idx} className="space-y-2 pt-2">
-                <h2 className="font-satoshi text-lg sm:text-xl font-bold text-[#1E293B]">
-                  {sec.heading}
-                </h2>
-                <p className="font-normal text-slate-600 pl-0 sm:pl-4">
-                  {sec.body}
-                </p>
-              </div>
-            ))}
-          </article>
+          {loading ? (
+            <div className="space-y-6 animate-pulse">
+              <div className="h-4 bg-slate-100 rounded w-full" />
+              <div className="h-4 bg-slate-100 rounded w-5/6" />
+              <div className="h-4 bg-slate-100 rounded w-4/6" />
+            </div>
+          ) : (
+            <article className="font-poppins text-sm sm:text-base text-slate-700 leading-relaxed space-y-6">
+              {article!.introParagraphs.map((para, idx) => (
+                <p key={idx} className="font-medium text-slate-800">{para}</p>
+              ))}
+              
+              {article!.sections.map((sec, idx) => (
+                <div key={idx} className="space-y-2 pt-2">
+                  <h2 className="font-satoshi text-lg sm:text-xl font-bold text-[#1E293B]">
+                    {sec.heading}
+                  </h2>
+                  <p className="font-normal text-slate-600 pl-0 sm:pl-4">
+                    {sec.body}
+                  </p>
+                </div>
+              ))}
+            </article>
+          )}
 
         </div>
       </main>
